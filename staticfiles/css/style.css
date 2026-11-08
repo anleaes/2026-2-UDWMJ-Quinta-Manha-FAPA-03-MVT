@@ -1,0 +1,23 @@
+
+body {
+    background-color: rgb(245, 245, 245);
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+nav {
+    background-color: #157caf;
+    padding: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-right: 15px;
+    font-size: 15px;
+}
+
+nav a:hover {
+    color: #dbeafe;
+    text-decoration: underline;
+}
