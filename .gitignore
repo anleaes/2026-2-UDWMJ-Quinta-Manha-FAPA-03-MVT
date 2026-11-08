@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Credenciais
+.env
+.env.*
+!.env.example
+
+# Banco SQLite
+db.sqlite3
+
+# Arquivos estaticos
+/static/
+
+# VS Code
+.vscode/
+
+# Uploads
+/media/*
+!/media/.gitkeep
+
+# Oracle Wallet
+/wallet/*
+!/wallet/.gitkeep
+
