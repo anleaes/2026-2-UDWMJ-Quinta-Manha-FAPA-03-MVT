@@ -41,6 +41,10 @@
                 <a href="{% url 'grupos_materiais:editar_grupo' grupo.id %}">
                     Editar
                 </a>
+
+                <a href="{% url 'grupos_materiais:excluir_grupo' grupo.id %}">
+                    Excluir
+                </a>
             </td>
         </tr>
         {% empty %}
