@@ -47,3 +47,10 @@ def editar_grupo(request, id_grupo):
 
     context['form'] = form
     return render(request, template_name, context)
+
+def excluir_grupo(request, id_grupo):
+    grupo = get_object_or_404(GrupoMaterial, id=id_grupo)
+
+    grupo.delete()
+
+    return redirect('grupos_materiais:listar_grupos')
