@@ -18,3 +18,14 @@ def adicionar_funcionario(request):
 
     context['form'] = form
     return render(request, template_name, context)
+
+def listar_funcionarios(request):
+    template_name = 'funcionarios/listar_funcionarios.html'
+
+    funcionarios = Funcionario.objects.all()
+
+    context = {
+        'funcionarios': funcionarios
+    }
+
+    return render(request, template_name, context)
