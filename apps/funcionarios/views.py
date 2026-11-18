@@ -19,6 +19,7 @@ def adicionar_funcionario(request):
     context['form'] = form
     return render(request, template_name, context)
 
+
 def listar_funcionarios(request):
     template_name = 'funcionarios/listar_funcionarios.html'
 
@@ -28,4 +29,23 @@ def listar_funcionarios(request):
         'funcionarios': funcionarios
     }
 
+    return render(request, template_name, context)
+
+
+def editar_funcionario(request, id_funcionario):
+    template_name = 'funcionarios/adicionar_funcionario.html'
+    context = {}
+
+    funcionario = get_object_or_404(Funcionario, id=id_funcionario)
+
+    if request.method == 'POST':
+        form = FuncionarioForm(request.POST, instance=funcionario)
+
+        if form.is_valid():
+            form.save()
+            return redirect('funcionarios:listar_funcionarios')
+    else:
+        form = FuncionarioForm(instance=funcionario)
+
+    context['form'] = form
     return render(request, template_name, context)
