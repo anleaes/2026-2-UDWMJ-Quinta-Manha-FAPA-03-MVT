@@ -7,6 +7,13 @@ class Funcionario(models.Model):
     data_admissao = models.DateField()
     ativo = models.BooleanField(default=True)
 
+    def atualizar_dados(self, nome, cpf, cargo, data_admissao):
+        self.nome = nome
+        self.cpf = cpf
+        self.cargo = cargo
+        self.data_admissao = data_admissao
+        self.save()
+        
     class Meta:
         verbose_name = "Funcionário"
         verbose_name_plural = "Funcionários"
