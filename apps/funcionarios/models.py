@@ -13,7 +13,11 @@ class Funcionario(models.Model):
         self.cargo = cargo
         self.data_admissao = data_admissao
         self.save()
-        
+
+    def ativar(self):
+        self.ativo = True
+        self.save()
+
     class Meta:
         verbose_name = "Funcionário"
         verbose_name_plural = "Funcionários"
