@@ -18,6 +18,11 @@ class Funcionario(models.Model):
         self.ativo = True
         self.save()
 
+
+    def desativar(self):
+        self.ativo = False
+        self.save()
+
     class Meta:
         verbose_name = "Funcionário"
         verbose_name_plural = "Funcionários"
