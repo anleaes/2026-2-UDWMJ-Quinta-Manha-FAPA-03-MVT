@@ -1,5 +1,6 @@
 from django import forms
 from .models import Funcionario
+from django.utils import timezone
 
 
 class FuncionarioForm(forms.ModelForm):
@@ -38,3 +39,14 @@ class FuncionarioForm(forms.ModelForm):
             )
 
         return cpf
+    
+
+    def clean_data_admissao(self):
+        data_admissao = self.cleaned_data['data_admissao']
+
+        if data_admissao > timezone.localdate():
+            raise forms.ValidationError(
+                'A data de admissão não pode ser futura.'
+            )
+
+        return data_admissao
