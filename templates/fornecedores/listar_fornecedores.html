@@ -23,6 +23,7 @@
             <th>Telefone</th>
             <th>E-mail</th>
             <th>Ativo</th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -39,6 +40,12 @@
                 {% else %}
                     Não
                 {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'fornecedores:editar_fornecedor' fornecedor.id %}">
+                    Editar
+                </a>
+                </form>
             </td>
         </tr>
         {% empty %}
