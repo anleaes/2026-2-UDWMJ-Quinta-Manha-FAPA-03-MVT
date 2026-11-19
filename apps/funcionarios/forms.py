@@ -8,6 +8,13 @@ class FuncionarioForm(forms.ModelForm):
         model = Funcionario
         exclude = ()
 
+        widgets = {
+        'data_admissao': forms.DateInput(
+            format='%Y-%m-%d',
+            attrs={'type': 'date'}
+        )
+    }
+
     def clean_cpf(self):
         cpf = self.cleaned_data['cpf']
 
