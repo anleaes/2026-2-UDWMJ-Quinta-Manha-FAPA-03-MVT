@@ -25,3 +25,6 @@ class Marca(models.Model):
         verbose_name = "Marca"
         verbose_name_plural = "Marcas"
         ordering = ["nome"]
+
+    def __str__(self):
+        return self.nome
