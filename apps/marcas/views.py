@@ -30,3 +30,20 @@ def listar_marca(request):
 
     return render(request, template_name, context)
 
+def editar_marca(request, id_marca):
+    template_name = 'marcas/adicionar_marca.html'
+    context = {}
+
+    marca = get_object_or_404(Marca, id=id_marca)
+
+    if request.method == 'POST':
+        form = MarcaForm(request.POST, instance=marca)
+
+        if form.is_valid():
+            form.save()
+            return redirect('marcas:listar_marcas')
+    else:
+        form = MarcaForm(instance=marca)
+
+    context['form'] = form
+    return render(request, template_name, context)
