@@ -22,3 +22,11 @@ class Fornecedor(models.Model):
     def desativar(self):
         self.ativo = False
         self.save()
+
+    class Meta:
+        verbose_name = "Fornecedor"
+        verbose_name_plural = "Fornecedores"
+        ordering = ["nome"]
+
+    def __str__(self):
+        return self.nome
