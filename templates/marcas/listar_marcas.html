@@ -30,7 +30,8 @@
         <tr>
             <td>{{ marca.id }}</td>
             <td>{{ marca.nome }}</td>
-            <td>{{ marca.segmento }}</td>
+            <td>{{ marca.descricao }}</td>
+            <td>{{ marca.pais_origem }}</td>
             <td>
                 {% if marca.ativo %}
                     Sim
@@ -41,6 +42,9 @@
             <td>
                 <a href="{% url 'marcas:editar_marca' marca.id %}">
                     Editar
+                </a>
+                <a href="{% url 'marcas:excluir_marca' marca.id %}">
+                    Excluir
                 </a>
             </td>
 
