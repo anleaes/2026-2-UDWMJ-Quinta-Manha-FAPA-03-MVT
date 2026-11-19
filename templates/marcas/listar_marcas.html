@@ -22,26 +22,32 @@
             <th>Descrição</th>
             <th>País de Origem</th>
             <th>Ativo</th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
-        {% for grupo in grupos %}
+        {% for marca in marcas %}
         <tr>
-            <td>{{ grupo.id }}</td>
-            <td>{{ grupo.nome }}</td>
-            <td>{{ grupo.segmento }}</td>
+            <td>{{ marca.id }}</td>
+            <td>{{ marca.nome }}</td>
+            <td>{{ marca.segmento }}</td>
             <td>
-                {% if grupo.ativo %}
+                {% if marca.ativo %}
                     Sim
                 {% else %}
                     Não
                 {% endif %}
             </td>
+            <td>
+                <a href="{% url 'marcas:editar_marca' marca.id %}">
+                    Editar
+                </a>
+            </td>
 
         </tr>
         {% empty %}
         <tr>
-            <td colspan="5">Nenhum grupo cadastrado.</td>
+            <td colspan="5">Nenhuma marca cadastrada.</td>
         </tr>
         {% endfor %}
     </tbody>
