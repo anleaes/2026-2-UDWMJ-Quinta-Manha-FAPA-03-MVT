@@ -45,6 +45,14 @@
                 <a href="{% url 'fornecedores:editar_fornecedor' fornecedor.id %}">
                     Editar
                 </a>
+
+                <form method="POST"
+                      action="{% url 'fornecedores:excluir_fornecedor' fornecedor.id %}"
+                      onsubmit="return confirm('Deseja realmente excluir este fornecedor?');">
+
+                    {% csrf_token %}
+
+                    <button type="submit">Excluir</button>
                 </form>
             </td>
         </tr>
