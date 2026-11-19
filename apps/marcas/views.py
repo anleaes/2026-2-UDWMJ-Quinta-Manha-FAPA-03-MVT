@@ -47,3 +47,10 @@ def editar_marca(request, id_marca):
 
     context['form'] = form
     return render(request, template_name, context)
+
+def excluir_marca(request, id_marca):
+    marca = get_object_or_404(Marca, id=id_marca)
+
+    marca.delete()
+
+    return redirect('marcas:listar_marcas')
