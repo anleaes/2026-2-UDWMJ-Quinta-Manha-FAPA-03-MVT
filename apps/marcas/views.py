@@ -19,3 +19,14 @@ def adicionar_marca(request):
     context['form'] = form
     return render(request, template_name, context)
 
+def listar_marca(request):
+    template_name = 'marcas/listar_marcas.html'
+
+    marcas = Marca.objects.all()
+
+    context = {
+        'marcas': marcas
+    }
+
+    return render(request, template_name, context)
+
