@@ -7,3 +7,16 @@ class Marca(models.Model):
     descricao = models.TextField('Descricao', max_length=200)
     pais_origem = models.CharField('País de Origem', max_length=50)
     ativo = models.BooleanField('Ativo', default=False)
+
+    def atualizar_marca(self, nome, segmento):
+        self.nome = nome
+        self.segmento = segmento
+        self.save()
+
+    def ativar_marca(self):
+        self.ativo = True
+        self.save()
+
+    def desativar_marca(self):
+        self.ativo = False
+        self.save()
