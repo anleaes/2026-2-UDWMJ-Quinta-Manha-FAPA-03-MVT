@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('core.urls', namespace='core')),
     path('grupos-materiais/', include('grupos_materiais.urls')),
     path('funcionarios/', include('funcionarios.urls')),
+    path('fornecedores/', include('fornecedores.urls')),
 ]
 
 urlpatterns += static(
