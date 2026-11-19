@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Lista de Funcionários - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+
+<h2>Lista de Funcionários</h2>
+
+<a href="{% url 'funcionarios:adicionar_funcionario' %}">
+    Cadastrar novo funcionário
+</a>
+
+<br><br>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Cargo</th>
+            <th>Data de Admissão</th>
+            <th>Ativo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for funcionario in funcionarios %}
+        <tr>
+            <td>{{ funcionario.id }}</td>
+            <td>{{ funcionario.nome }}</td>
+            <td>{{ funcionario.cpf }}</td>
+            <td>{{ funcionario.cargo }}</td>
+            <td>{{ funcionario.data_admissao|date:"d/m/Y" }}</td>
+            <td>
+                {% if funcionario.ativo %}
+                    Sim
+                {% else %}
+                    Não
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">Nenhum funcionário cadastrado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock body %}
