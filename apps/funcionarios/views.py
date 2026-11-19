@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Funcionario
 from .forms import FuncionarioForm
+from django.views.decorators.http import require_POST
 
 
 def adicionar_funcionario(request):
@@ -49,3 +50,12 @@ def editar_funcionario(request, id_funcionario):
 
     context['form'] = form
     return render(request, template_name, context)
+
+
+@require_POST
+def excluir_funcionario(request, id_funcionario):
+    funcionario = get_object_or_404(Funcionario, id=id_funcionario)
+
+    funcionario.delete()
+
+    return redirect('funcionarios:listar_funcionarios')
