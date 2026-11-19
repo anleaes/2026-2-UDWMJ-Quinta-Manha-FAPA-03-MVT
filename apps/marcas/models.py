@@ -20,3 +20,8 @@ class Marca(models.Model):
     def desativar_marca(self):
         self.ativo = False
         self.save()
+
+    class Meta:
+        verbose_name = "Marca"
+        verbose_name_plural = "Marcas"
+        ordering = ["nome"]
