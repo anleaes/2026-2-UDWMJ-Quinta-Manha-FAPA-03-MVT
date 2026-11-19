@@ -6,3 +6,4 @@ class Fornecedor(models.Model):
     cnpj = models.CharField(max_length=18)
     telefone = models.CharField(max_length=20)
     email = models.EmailField(max_length=254)
+    ativo = models.BooleanField(default=True)
