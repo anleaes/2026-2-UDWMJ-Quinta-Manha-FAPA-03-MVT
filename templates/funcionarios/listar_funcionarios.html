@@ -45,6 +45,15 @@
                 <a href="{% url 'funcionarios:editar_funcionario' funcionario.id %}">
                     Editar
                 </a>
+
+                <form method="POST"
+                      action="{% url 'funcionarios:excluir_funcionario' funcionario.id %}"
+                      onsubmit="return confirm('Deseja realmente excluir este funcionário?');">
+
+                    {% csrf_token %}
+
+                    <button type="submit">Excluir</button>
+                </form>
             </td>
         </tr>
         {% empty %}
