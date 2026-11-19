@@ -49,3 +49,11 @@ def editar_fornecedor(request, id_fornecedor):
 
     context['form'] = form
     return render(request, template_name, context)
+
+
+@require_POST
+def excluir_fornecedor(request, id_fornecedor):
+    fornecedor = get_object_or_404(Fornecedor, id=id_fornecedor)
+    fornecedor.delete()
+
+    return redirect('fornecedores:listar_fornecedores')
