@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'grupos_materiais.apps.GruposMateriaisConfig',
     'funcionarios.apps.FuncionariosConfig',
+    'fornecedores.apps.FornecedoresConfig',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
