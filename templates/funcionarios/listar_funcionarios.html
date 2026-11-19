@@ -23,6 +23,7 @@
             <th>Cargo</th>
             <th>Data de Admissão</th>
             <th>Ativo</th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -40,10 +41,15 @@
                     Não
                 {% endif %}
             </td>
+            <td>
+                <a href="{% url 'funcionarios:editar_funcionario' funcionario.id %}">
+                    Editar
+                </a>
+            </td>
         </tr>
         {% empty %}
         <tr>
-            <td colspan="6">Nenhum funcionário cadastrado.</td>
+            <td colspan="7">Nenhum funcionário cadastrado.</td>
         </tr>
         {% endfor %}
     </tbody>
