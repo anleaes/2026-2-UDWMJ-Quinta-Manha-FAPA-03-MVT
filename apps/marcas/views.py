@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Marca
 from .forms import MarcaForm
+from django.views.decorators.http import require_POST
 
 
 def adicionar_marca(request):
@@ -48,6 +49,7 @@ def editar_marca(request, id_marca):
     context['form'] = form
     return render(request, template_name, context)
 
+@require_POST
 def excluir_marca(request, id_marca):
     marca = get_object_or_404(Marca, id=id_marca)
 

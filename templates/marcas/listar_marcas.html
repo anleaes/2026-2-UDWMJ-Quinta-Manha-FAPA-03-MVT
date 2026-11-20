@@ -43,15 +43,21 @@
                 <a href="{% url 'marcas:editar_marca' marca.id %}">
                     Editar
                 </a>
-                <a href="{% url 'marcas:excluir_marca' marca.id %}">
-                    Excluir
-                </a>
+
+                <form method="POST"
+                      action="{% url 'marcas:excluir_marca' marca.id %}"
+                      onsubmit="return confirm('Deseja realmente excluir esta marca?');">
+
+                    {% csrf_token %}
+
+                    <button type="submit">Excluir</button>
+                </form>
             </td>
 
         </tr>
         {% empty %}
         <tr>
-            <td colspan="5">Nenhuma marca cadastrada.</td>
+            <td colspan="6">Nenhuma marca cadastrada.</td>
         </tr>
         {% endfor %}
     </tbody>
