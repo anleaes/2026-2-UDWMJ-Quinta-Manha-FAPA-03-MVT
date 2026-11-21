@@ -9,6 +9,33 @@ from .models import Comprador
 from .forms import CompradorForm
 
 
+class CompradorUrlsTest(TestCase):
+
+    def test_url_listar_compradores(self):
+        self.assertEqual(
+            reverse('compradores:listar_compradores'),
+            '/compradores/listar/'
+        )
+
+    def test_url_adicionar_comprador(self):
+        self.assertEqual(
+            reverse('compradores:adicionar_comprador'),
+            '/compradores/adicionar/'
+        )
+
+    def test_url_editar_comprador(self):
+        self.assertEqual(
+            reverse('compradores:editar_comprador', args=[1]),
+            '/compradores/editar/1/'
+        )
+
+    def test_url_excluir_comprador(self):
+        self.assertEqual(
+            reverse('compradores:excluir_comprador', args=[1]),
+            '/compradores/excluir/1/'
+        )
+
+
 class CompradorModelTest(TestCase):
 
     def setUp(self):
