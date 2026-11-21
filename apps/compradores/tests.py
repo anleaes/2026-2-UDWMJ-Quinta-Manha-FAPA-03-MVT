@@ -1,4 +1,5 @@
 
+
 from datetime import date
 
 from django.test import TestCase
@@ -142,3 +143,23 @@ class CompradorViewsTest(TestCase):
         self.assertFalse(
             Comprador.objects.filter(id=self.comprador.id).exists()
         )
+
+    def test_editar_comprador_inexistente(self):
+        response = self.client.get(
+            reverse(
+                'compradores:editar_comprador',
+                args=[9999]
+            )
+        )
+
+        self.assertEqual(response.status_code, 404)
+
+    def test_excluir_comprador_inexistente(self):
+        response = self.client.get(
+            reverse(
+                'compradores:excluir_comprador',
+                args=[9999]
+            )
+        )
+
+        self.assertEqual(response.status_code, 404)
