@@ -1,5 +1,4 @@
 
-
 from datetime import date
 
 from django.test import TestCase
@@ -163,3 +162,16 @@ class CompradorViewsTest(TestCase):
         )
 
         self.assertEqual(response.status_code, 404)
+
+    def test_excluir_comprador_por_get_nao_exclui(self):
+        response = self.client.get(
+            reverse(
+                'compradores:excluir_comprador',
+                args=[self.comprador.id]
+            )
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(
+            Comprador.objects.filter(id=self.comprador.id).exists()
+        )
