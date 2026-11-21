@@ -33,7 +33,7 @@
             <td>{{ comprador.data_nascimento|date:"d/m/Y" }}</td>
             <td>{{ comprador.data_cadastro|date:"d/m/Y" }}</td>
             <td>
-                <a href="{% url 'compradores:editar_comprador' comprador.id %}">
+                <a href="{% url 'compradores:editar_cadastro_comprador' comprador.id %}">
                     Editar
                 </a>
 
