@@ -1,0 +1,24 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Excluir Comprador - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+<h2>Excluir comprador</h2>
+
+<p>
+    Tem certeza de que deseja excluir
+    <strong>{{ comprador.nome_completo }}</strong>?
+</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Confirmar exclusão</button>
+
+    <a href="{% url 'compradores:listar_compradores' %}">
+        Cancelar
+    </a>
+</form>
+{% endblock body %}
