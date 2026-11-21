@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Comprador
 from .forms import CompradorForm
-
+from django.contrib import messages
 
 def adicionar_comprador(request):
     template_name = 'compradores/adicionar_comprador.html'
