@@ -1,0 +1,52 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Lista de Compradores - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+<h2>Compradores cadastrados</h2>
+
+<a href="{% url 'compradores:adicionar_comprador' %}">
+    Cadastrar comprador
+</a>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nome completo</th>
+            <th>CPF</th>
+            <th>Telefone</th>
+            <th>Data de nascimento</th>
+            <th>Data de cadastro</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for comprador in compradores %}
+        <tr>
+            <td>{{ comprador.nome_completo }}</td>
+            <td>{{ comprador.cpf }}</td>
+            <td>{{ comprador.telefone_contato }}</td>
+            <td>{{ comprador.data_nascimento|date:"d/m/Y" }}</td>
+            <td>{{ comprador.data_cadastro|date:"d/m/Y" }}</td>
+            <td>
+                <a href="{% url 'compradores:editar_comprador' comprador.id %}">
+                    Editar
+                </a>
+
+                <a href="{% url 'compradores:excluir_comprador' comprador.id %}">
+                    Excluir
+                </a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">Nenhum comprador cadastrado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock body %}
