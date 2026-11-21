@@ -42,19 +42,30 @@ class Comprador(models.Model):
         self.save()
 
     def validar_cpf(self):
-        cpf = ''.join(filter(str.isdigit, self.cpf))
+        cpf = ''.join(filter(str.isdigit, self.cpf or ''))
 
-        if len(cpf) != 11 or cpf == cpf[0] * 11:
+        if len(cpf) != 11:
             return False
 
-        soma = sum(int(cpf[i]) * (10 - i) for i in range(9))
+        if cpf == cpf[0] * 11:
+            return False
+
+        soma = sum(
+            int(cpf[i]) * (10 - i)
+            for i in range(9)
+        )
+
         resto = (soma * 10) % 11
         digito1 = 0 if resto == 10 else resto
 
         if digito1 != int(cpf[9]):
             return False
 
-        soma = sum(int(cpf[i]) * (11 - i) for i in range(10))
+        soma = sum(
+            int(cpf[i]) * (11 - i)
+            for i in range(10)
+        )
+
         resto = (soma * 10) % 11
         digito2 = 0 if resto == 10 else resto
 
