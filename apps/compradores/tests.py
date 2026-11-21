@@ -2,7 +2,7 @@
 from datetime import date
 
 from django.test import TestCase
-from django.urls import reverse
+from django.urls import reverse, resolve
 from django.core.exceptions import ValidationError
 
 from .models import Comprador
@@ -33,6 +33,30 @@ class CompradorUrlsTest(TestCase):
         self.assertEqual(
             reverse('compradores:excluir_comprador', args=[1]),
             '/compradores/excluir/1/'
+        )
+
+    def test_url_listar_direciona_para_view_correta(self):
+        self.assertEqual(
+            resolve('/compradores/listar/').func.__name__,
+            'listar_compradores'
+        )
+
+    def test_url_adicionar_direciona_para_view_correta(self):
+        self.assertEqual(
+            resolve('/compradores/adicionar/').func.__name__,
+            'adicionar_comprador'
+        )
+
+    def test_url_editar_direciona_para_view_correta(self):
+        self.assertEqual(
+            resolve('/compradores/editar/1/').func.__name__,
+            'editar_comprador'
+        )
+
+    def test_url_excluir_direciona_para_view_correta(self):
+        self.assertEqual(
+            resolve('/compradores/excluir/1/').func.__name__,
+            'excluir_comprador'
         )
 
 
