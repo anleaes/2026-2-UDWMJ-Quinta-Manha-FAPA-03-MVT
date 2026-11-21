@@ -59,6 +59,30 @@ class CompradorUrlsTest(TestCase):
             'excluir_comprador'
         )
 
+    def test_url_editar_identifica_id_comprador(self):
+        resultado = resolve('/compradores/editar/42/')
+
+        self.assertEqual(
+            resultado.view_name,
+            'compradores:editar_comprador'
+        )
+        self.assertEqual(
+            resultado.kwargs['id_comprador'],
+            42
+        )
+
+    def test_url_excluir_identifica_id_comprador(self):
+        resultado = resolve('/compradores/excluir/42/')
+
+        self.assertEqual(
+            resultado.view_name,
+            'compradores:excluir_comprador'
+        )
+        self.assertEqual(
+            resultado.kwargs['id_comprador'],
+            42
+        )
+
 
 class CompradorModelTest(TestCase):
 
