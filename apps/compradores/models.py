@@ -1,4 +1,3 @@
-
 from django.db import models
 from django.core.exceptions import ValidationError
 
@@ -24,7 +23,7 @@ class Comprador(models.Model):
         verbose_name='Data de nascimento'
     )
 
-    data_cadastro = models.DateField(
+    data_cadastro = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Data de cadastro'
     )
