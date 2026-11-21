@@ -46,6 +46,7 @@ def editar_comprador(request, id_comprador):
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'Comprador atualizado com sucesso!')
             return redirect('compradores:listar_compradores')
     else:
         form = CompradorForm(instance=comprador)
@@ -62,6 +63,7 @@ def excluir_comprador(request, id_comprador):
 
     if request.method == 'POST':
         comprador.delete()
+        messages.success(request, 'Comprador excluído com sucesso!')
         return redirect('compradores:listar_compradores')
 
     context = {
