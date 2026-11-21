@@ -32,6 +32,10 @@ class CompradorModelTest(TestCase):
         self.comprador.cpf = '11111111111'
         self.assertFalse(self.comprador.validar_cpf())
 
+    def test_validar_cpf_vazio(self):
+        self.comprador.cpf = ''
+        self.assertFalse(self.comprador.validar_cpf())
+
     def test_modelo_rejeita_cpf_invalido(self):
         self.comprador.cpf = '11111111111'
 
