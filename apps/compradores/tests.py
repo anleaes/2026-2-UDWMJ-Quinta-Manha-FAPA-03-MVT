@@ -3,6 +3,7 @@ from datetime import date
 
 from django.test import TestCase
 from django.urls import reverse
+from django.core.exceptions import ValidationError
 
 from .models import Comprador
 from .forms import CompradorForm
@@ -30,6 +31,12 @@ class CompradorModelTest(TestCase):
     def test_validar_cpf_invalido(self):
         self.comprador.cpf = '11111111111'
         self.assertFalse(self.comprador.validar_cpf())
+
+    def test_modelo_rejeita_cpf_invalido(self):
+        self.comprador.cpf = '11111111111'
+
+        with self.assertRaises(ValidationError):
+            self.comprador.full_clean()
 
     def test_atualizar_cadastro(self):
         self.comprador.atualizar_cadastro(

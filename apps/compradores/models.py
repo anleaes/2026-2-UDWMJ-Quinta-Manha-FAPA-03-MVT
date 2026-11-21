@@ -1,5 +1,6 @@
 
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 class Comprador(models.Model):
@@ -70,6 +71,14 @@ class Comprador(models.Model):
         digito2 = 0 if resto == 10 else resto
 
         return digito2 == int(cpf[10])
+
+    def clean(self):
+        super().clean()
+
+        if not self.validar_cpf():
+            raise ValidationError({
+                'cpf': 'Informe um CPF válido.'
+            })
 
     class Meta:
         verbose_name = 'Comprador'
