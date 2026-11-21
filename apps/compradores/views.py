@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Comprador
@@ -13,6 +12,7 @@ def adicionar_comprador(request):
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'Comprador cadastrado com sucesso!')
             return redirect('compradores:listar_compradores')
     else:
         form = CompradorForm()
