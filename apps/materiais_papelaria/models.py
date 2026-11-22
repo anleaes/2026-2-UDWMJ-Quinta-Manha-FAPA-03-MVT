@@ -1,10 +1,16 @@
+from django.core.validators import MinValueValidator
 from django.db import models
 
 
 class MaterialPapelaria(models.Model):
-    codigo_interno = models.CharField('Código Interno', max_length=50)
+    codigo_interno = models.CharField('Código Interno', max_length=50, unique=True)
     nome_comercial = models.CharField('Nome Comercial', max_length=100)
-    preco_venda = models.DecimalField('Preço de Venda', max_digits=10, decimal_places=2)
+    preco_venda = models.DecimalField(
+        'Preço de Venda',
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
+    )
     imagem_material = models.ImageField(
         'Imagem do Material',
         upload_to='materiais/',
@@ -40,6 +46,12 @@ class MaterialPapelaria(models.Model):
         verbose_name = 'Material de Papelaria'
         verbose_name_plural = 'Materiais de Papelaria'
         ordering = ['nome_comercial']
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(preco_venda__gte=0),
+                name='material_preco_nao_negativo',
+            ),
+        ]
 
     def __str__(self):
         return self.nome_comercial
