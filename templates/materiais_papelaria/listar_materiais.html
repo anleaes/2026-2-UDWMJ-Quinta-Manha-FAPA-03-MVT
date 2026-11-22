@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Lista de Materiais - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+
+<h2>Materiais de Papelaria</h2>
+
+<a href="{% url 'materiais_papelaria:adicionar_material' %}">
+    Cadastrar novo material
+</a>
+
+<br><br>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Imagem</th>
+            <th>Código Interno</th>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Grupo</th>
+            <th>Marca</th>
+            <th>Ativo</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for material in materiais %}
+        <tr>
+            <td>
+                {% if material.imagem_material %}
+                    <img src="{{ material.imagem_material.url }}" alt="{{ material.nome_comercial }}" width="80">
+                {% endif %}
+            </td>
+            <td>{{ material.codigo_interno }}</td>
+            <td>{{ material.nome_comercial }}</td>
+            <td>R$ {{ material.preco_venda }}</td>
+            <td>{{ material.grupo }}</td>
+            <td>{{ material.marca }}</td>
+            <td>{% if material.ativo %}Sim{% else %}Não{% endif %}</td>
+            <td>
+                <a href="{% url 'materiais_papelaria:editar_material' material.id %}">
+                    Editar
+                </a>
+
+                <form method="POST"
+                      action="{% url 'materiais_papelaria:excluir_material' material.id %}"
+                      onsubmit="return confirm('Tem certeza que deseja excluir este material?');">
+                    {% csrf_token %}
+                    <button type="submit">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8">Nenhum material cadastrado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock body %}

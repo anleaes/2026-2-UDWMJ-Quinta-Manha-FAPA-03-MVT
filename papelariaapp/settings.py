@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     
     'core.apps.CoreConfig',
     'grupos_materiais.apps.GruposMateriaisConfig',
+    'materiais_papelaria.apps.MateriaisPapelariaConfig',
     'funcionarios.apps.FuncionariosConfig',
     'fornecedores.apps.FornecedoresConfig',
     'compradores.apps.CompradoresConfig',
