@@ -45,7 +45,10 @@
                 <a href="{% url 'materiais_papelaria:editar_material' material.id %}">
                     Editar
                 </a>
-                <form method="POST" action="{% url 'materiais_papelaria:excluir_material' material.id %}">
+
+                <form method="POST"
+                      action="{% url 'materiais_papelaria:excluir_material' material.id %}"
+                      onsubmit="return confirm('Tem certeza que deseja excluir este material?');">
                     {% csrf_token %}
                     <button type="submit">Excluir</button>
                 </form>
