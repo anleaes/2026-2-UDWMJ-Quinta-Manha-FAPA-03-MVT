@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
 
 from .forms import MaterialPapelariaForm
 from .models import MaterialPapelaria
@@ -36,3 +37,10 @@ def editar_material(request, id_material):
         form = MaterialPapelariaForm(instance=material)
 
     return render(request, 'materiais_papelaria/adicionar_material.html', {'form': form})
+
+
+@require_POST
+def excluir_material(request, id_material):
+    material = get_object_or_404(MaterialPapelaria, id=id_material)
+    material.delete()
+    return redirect('materiais_papelaria:listar_materiais')
