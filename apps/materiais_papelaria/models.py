@@ -23,6 +23,11 @@ class MaterialPapelaria(models.Model):
     )
     ativo = models.BooleanField('Ativo', default=True)
 
+    def alterar_preco(self, novo_preco):
+        self.preco_venda = novo_preco
+        self.full_clean()
+        self.save()
+
     class Meta:
         verbose_name = 'Material de Papelaria'
         verbose_name_plural = 'Materiais de Papelaria'
