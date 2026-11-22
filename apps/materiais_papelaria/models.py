@@ -28,6 +28,14 @@ class MaterialPapelaria(models.Model):
         self.full_clean()
         self.save()
 
+    def ativar(self):
+        self.ativo = True
+        self.save()
+
+    def desativar(self):
+        self.ativo = False
+        self.save()
+
     class Meta:
         verbose_name = 'Material de Papelaria'
         verbose_name_plural = 'Materiais de Papelaria'
