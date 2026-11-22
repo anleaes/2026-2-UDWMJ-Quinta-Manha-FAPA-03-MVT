@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls', namespace='core')),
     path('grupos-materiais/', include('grupos_materiais.urls')),
+    path('materiais/', include('materiais_papelaria.urls', namespace='materiais_papelaria')),
     path('marcas/', include('marcas.urls', namespace='marcas')),
     path('funcionarios/', include('funcionarios.urls')),
     path('fornecedores/', include('fornecedores.urls')),
