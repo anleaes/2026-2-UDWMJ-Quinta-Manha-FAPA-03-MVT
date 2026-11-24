@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 
 class Venda(models.Model):
     class Status(models.TextChoices):
@@ -43,6 +44,17 @@ class Venda(models.Model):
             total += item.calcular_subtotal()
 
         return total
+
+    def _validar_finalizacao(self):
+        if self.status != self.Status.ABERTA:
+            raise ValidationError(
+                "Somente vendas abertas podem ser finalizadas."
+            )
+
+        if not self.itens.exists():
+            raise ValidationError(
+                "A venda precisa possuir pelo menos um item."
+            )
 
     class Meta:
         verbose_name = "Venda"
