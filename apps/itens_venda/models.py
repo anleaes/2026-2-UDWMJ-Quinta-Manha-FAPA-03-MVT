@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
 
@@ -41,6 +41,11 @@ class ItemVenda(models.Model):
                 "O material precisa estar ativo."
             )
 
+    def _atualizar_total_venda(self):
+        self.venda.valor_total = self.venda.calcular_total()
+        self.venda.save(update_fields=["valor_total"])
+
+    @transaction.atomic
     def adicionar_item(self):
         if self.pk is not None:
             raise ValidationError(
@@ -55,6 +60,9 @@ class ItemVenda(models.Model):
         self.full_clean()
         self.save()
 
+        self._atualizar_total_venda()
+
+    @transaction.atomic
     def atualizar_dados(self, quantidade):
         if self.pk is None:
             raise ValidationError(
@@ -68,6 +76,9 @@ class ItemVenda(models.Model):
         self.full_clean()
         self.save(update_fields=["quantidade"])
 
+        self._atualizar_total_venda()
+
+    @transaction.atomic
     def remover_item(self):
         if self.pk is None:
             raise ValidationError(
@@ -77,3 +88,5 @@ class ItemVenda(models.Model):
         self._validar_venda_aberta()
 
         self.delete()
+
+        self._atualizar_total_venda()
