@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
+from django.core.exceptions import ValidationError
 
 from .forms import VendaForm
 from .models import Venda
@@ -42,3 +44,22 @@ def detalhar_venda(request, id_venda):
     }
 
     return render(request, template_name, context)
+
+
+@require_POST
+def cancelar_venda(request, id_venda):
+    venda = get_object_or_404(Venda, id=id_venda)
+
+    try:
+        venda.cancelar_venda()
+    except ValidationError as erro:
+        template_name = 'vendas/detalhar_venda.html'
+
+        context = {
+            'venda': venda,
+            'erro': erro.messages[0]
+        }
+
+        return render(request, template_name, context)
+
+    return redirect('vendas:detalhar_venda', id_venda=id_venda)
