@@ -8,6 +8,10 @@
 
 <h2>Itens da Venda #{{ venda.id }}</h2>
 
+{% if erro %}
+    <p>{{ erro }}</p>
+{% endif %}
+
 <p><strong>Status:</strong> {{ venda.get_status_display }}</p>
 
 {% if venda.status == 'ABERTA' %}
@@ -41,6 +45,11 @@
                         <a href="{% url 'itens_venda:editar_item' venda.id item.id %}">
                             Editar
                         </a>
+
+                        <form method="POST" action="{% url 'itens_venda:remover_item' venda.id item.id %}" onsubmit="return confirm('Deseja realmente remover este item?');">
+                            {% csrf_token %}
+                            <button type="submit">Remover</button>
+                        </form>
                     {% endif %}
                 </td>
             </tr>
