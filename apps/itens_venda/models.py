@@ -1,3 +1,8 @@
 from django.db import models
 
-# Create your models here.
+class ItemVenda(models.Model):
+    venda = models.ForeignKey(
+        'vendas.Venda',
+        on_delete=models.CASCADE,
+        related_name='itens'
+    )
