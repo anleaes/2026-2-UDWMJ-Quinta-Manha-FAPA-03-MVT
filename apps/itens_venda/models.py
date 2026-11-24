@@ -40,3 +40,17 @@ class ItemVenda(models.Model):
             raise ValidationError(
                 "O material precisa estar ativo."
             )
+
+    def adicionar_item(self):
+        if self.pk is not None:
+            raise ValidationError(
+                "Este item ja esta cadastrado."
+            )
+
+        self._validar_venda_aberta()
+        self._validar_material_ativo()
+
+        self.preco_unitario = self.material.preco_venda
+
+        self.full_clean()
+        self.save()
