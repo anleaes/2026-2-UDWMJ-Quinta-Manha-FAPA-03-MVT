@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 
 
 class ItemVenda(models.Model):
@@ -27,3 +28,15 @@ class ItemVenda(models.Model):
 
     def calcular_subtotal(self):
         return self.quantidade * self.preco_unitario
+
+    def _validar_venda_aberta(self):
+        if self.venda.status != self.venda.Status.ABERTA:
+            raise ValidationError(
+                "Somente vendas abertas podem ter seus itens alterados."
+            )
+
+    def _validar_material_ativo(self):
+        if not self.material.ativo:
+            raise ValidationError(
+                "O material precisa estar ativo."
+            )
