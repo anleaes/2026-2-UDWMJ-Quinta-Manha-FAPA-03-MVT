@@ -69,6 +69,21 @@ class Venda(models.Model):
         self.status = self.Status.CANCELADA
         self.save(update_fields=["status"])
 
+    def atualizar_dados(self, comprador, funcionario):
+        if self.status != self.Status.ABERTA:
+            raise ValidationError(
+                "Somente vendas abertas podem ser editadas."
+            )
+
+        if not funcionario.ativo:
+            raise ValidationError(
+                "O funcionario precisa estar ativo."
+            )
+
+        self.comprador = comprador
+        self.funcionario = funcionario
+        self.save(update_fields=["comprador", "funcionario"])
+
     class Meta:
         verbose_name = "Venda"
         verbose_name_plural = "Vendas"
