@@ -31,3 +31,17 @@ def adicionar_item(request, id_venda):
     }
 
     return render(request, template_name, context)
+
+
+def listar_itens(request, id_venda):
+    template_name = 'itens_venda/listar_itens.html'
+
+    venda = get_object_or_404(Venda, id=id_venda)
+    itens = venda.itens.all()
+
+    context = {
+        'venda': venda,
+        'itens': itens,
+    }
+
+    return render(request, template_name, context)
