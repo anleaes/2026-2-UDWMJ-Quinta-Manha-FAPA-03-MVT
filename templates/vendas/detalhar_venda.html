@@ -12,48 +12,39 @@
     <p>{{ erro }}</p>
 {% endif %}
 
-<p>
-    <strong>Comprador:</strong>
-    {{ venda.comprador|default_if_none:"Não identificado" }}
-</p>
+<p><strong>Comprador:</strong> {{ venda.comprador|default_if_none:"Não identificado" }}</p>
+<p><strong>Funcionário:</strong> {{ venda.funcionario }}</p>
+<p><strong>Data da Venda:</strong> {{ venda.data_venda|date:"d/m/Y H:i" }}</p>
+<p><strong>Valor Total:</strong> R$ {{ venda.valor_total|floatformat:2 }}</p>
+<p><strong>Status:</strong> {{ venda.get_status_display }}</p>
 
-<p>
-    <strong>Funcionário:</strong>
-    {{ venda.funcionario }}
-</p>
+<a href="{% url 'itens_venda:listar_itens' venda.id %}">
+    Visualizar itens da venda
+</a>
 
-<p>
-    <strong>Data da Venda:</strong>
-    {{ venda.data_venda|date:"d/m/Y H:i" }}
-</p>
-
-<p>
-    <strong>Valor Total:</strong>
-    R$ {{ venda.valor_total|floatformat:2 }}
-</p>
-
-<p>
-    <strong>Status:</strong>
-    {{ venda.get_status_display }}
-</p>
+<br><br>
 
 {% if venda.status == 'ABERTA' %}
+
+    <a href="{% url 'itens_venda:adicionar_item' venda.id %}">
+        Adicionar item
+    </a>
+
+    <br><br>
+
     <a href="{% url 'vendas:editar_venda' venda.id %}">
         Editar venda
     </a>
 
     <br><br>
 
-    <form method="POST"
-          action="{% url 'vendas:cancelar_venda' venda.id %}"
-          onsubmit="return confirm('Deseja realmente cancelar esta venda?');">
-
+    <form method="POST" action="{% url 'vendas:cancelar_venda' venda.id %}" onsubmit="return confirm('Deseja realmente cancelar esta venda?');">
         {% csrf_token %}
-
         <button type="submit">Cancelar venda</button>
     </form>
 
     <br>
+
 {% endif %}
 
 <a href="{% url 'vendas:listar_vendas' %}">
