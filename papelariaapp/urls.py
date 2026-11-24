@@ -18,6 +18,7 @@ urlpatterns = [
     path('fornecedores/', include('fornecedores.urls')),
     path('compradores/', include('compradores.urls')),
     path('vendas/', include('vendas.urls')),
+    path('itens-venda/', include('itens_venda.urls')),
 ]
 
 urlpatterns += static(

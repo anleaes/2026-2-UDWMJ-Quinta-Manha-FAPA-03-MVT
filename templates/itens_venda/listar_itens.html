@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Itens da Venda - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+
+<h2>Itens da Venda #{{ venda.id }}</h2>
+
+{% if erro %}
+    <p>{{ erro }}</p>
+{% endif %}
+
+<p><strong>Status:</strong> {{ venda.get_status_display }}</p>
+<p><strong>Itens cadastrados:</strong> {{ itens|length }}</p>
+
+{% if venda.status == 'ABERTA' %}
+    <a href="{% url 'itens_venda:adicionar_item' venda.id %}">
+        Adicionar item
+    </a>
+{% endif %}
+
+<br><br>
+
+<table>
+    <thead>
+        <tr>
+            <th>Material</th>
+            <th>Quantidade</th>
+            <th>Preço unitário</th>
+            <th>Subtotal</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in itens %}
+            <tr>
+                <td>{{ item.material }}</td>
+                <td>{{ item.quantidade }}</td>
+                <td>R$ {{ item.preco_unitario|floatformat:2 }}</td>
+                <td>R$ {{ item.calcular_subtotal|floatformat:2 }}</td>
+                <td>
+                    {% if venda.status == 'ABERTA' %}
+                        <a href="{% url 'itens_venda:editar_item' venda.id item.id %}">
+                            Editar
+                        </a>
+
+                        <form method="POST" action="{% url 'itens_venda:remover_item' venda.id item.id %}" onsubmit="return confirm('Deseja realmente remover este item?');">
+                            {% csrf_token %}
+                            <button type="submit">Remover</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5">Nenhum item cadastrado.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p><strong>Valor total:</strong> R$ {{ venda.valor_total|floatformat:2 }}</p>
+
+<a href="{% url 'vendas:detalhar_venda' venda.id %}">
+    Voltar para os detalhes da venda
+</a>
+
+{% endblock body %}
