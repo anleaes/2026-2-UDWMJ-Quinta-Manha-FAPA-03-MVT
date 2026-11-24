@@ -54,3 +54,16 @@ class ItemVenda(models.Model):
 
         self.full_clean()
         self.save()
+
+    def atualizar_dados(self, quantidade):
+        if self.pk is None:
+            raise ValidationError(
+                "O item precisa estar cadastrado."
+            )
+
+        self._validar_venda_aberta()
+
+        self.quantidade = quantidade
+
+        self.full_clean()
+        self.save(update_fields=["quantidade"])
