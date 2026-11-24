@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 
 from .forms import VendaForm
+from .models import Venda
 
 
 def adicionar_venda(request):
@@ -17,4 +18,14 @@ def adicionar_venda(request):
         form = VendaForm()
 
     context['form'] = form
+    return render(request, template_name, context)
+
+def listar_vendas(request):
+    template_name = 'vendas/listar_vendas.html'
+    vendas = Venda.objects.all()
+
+    context = {
+        'vendas': vendas
+    }
+
     return render(request, template_name, context)
