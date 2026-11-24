@@ -33,6 +33,14 @@
     {{ venda.get_status_display }}
 </p>
 
+{% if venda.status == 'ABERTA' %}
+    <a href="{% url 'vendas:editar_venda' venda.id %}">
+        Editar venda
+    </a>
+
+    <br><br>
+{% endif %}
+
 <a href="{% url 'vendas:listar_vendas' %}">
     Voltar para a lista de vendas
 </a>
