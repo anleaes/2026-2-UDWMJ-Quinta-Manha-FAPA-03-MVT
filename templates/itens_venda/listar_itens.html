@@ -13,6 +13,7 @@
 {% endif %}
 
 <p><strong>Status:</strong> {{ venda.get_status_display }}</p>
+<p><strong>Itens cadastrados:</strong> {{ itens|length }}</p>
 
 {% if venda.status == 'ABERTA' %}
     <a href="{% url 'itens_venda:adicionar_item' venda.id %}">
