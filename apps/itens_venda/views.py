@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ValidationError
+from django.views.decorators.http import require_POST
 
 from vendas.models import Venda
 from .models import ItemVenda
@@ -76,3 +77,24 @@ def editar_item(request, id_venda, id_item):
     }
 
     return render(request, template_name, context)
+
+
+@require_POST
+def remover_item(request, id_venda, id_item):
+    venda = get_object_or_404(Venda, id=id_venda)
+    item = get_object_or_404(ItemVenda, id=id_item, venda=venda)
+
+    try:
+        item.remover_item()
+    except ValidationError as erro:
+        template_name = 'itens_venda/listar_itens.html'
+
+        context = {
+            'venda': venda,
+            'itens': venda.itens.all(),
+            'erro': erro.messages[0],
+        }
+
+        return render(request, template_name, context)
+
+    return redirect('itens_venda:listar_itens', id_venda)
