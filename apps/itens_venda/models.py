@@ -90,3 +90,11 @@ class ItemVenda(models.Model):
         self.delete()
 
         self._atualizar_total_venda()
+
+    class Meta:
+        verbose_name = "Item de Venda"
+        verbose_name_plural = "Itens de Venda"
+        ordering = ["id"]
+
+    def __str__(self):
+        return f"{self.material} - Venda #{self.venda_id}"
