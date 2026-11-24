@@ -1,6 +1,11 @@
 from django.db import models
 
 class Venda(models.Model):
+    class Status(models.TextChoices):
+        ABERTA = 'ABERTA', 'Aberta'
+        FINALIZADA = 'FINALIZADA', 'Finalizada'
+        CANCELADA = 'CANCELADA', 'Cancelada'
+
     comprador = models.ForeignKey(
         'compradores.Comprador',
         on_delete=models.SET_NULL,
@@ -19,4 +24,10 @@ class Venda(models.Model):
         max_digits=10,
         decimal_places=2,
         default=0
+    )
+
+    status = models.CharField(
+        max_length=15,
+        choices=Status.choices,
+        default=Status.ABERTA
     )
