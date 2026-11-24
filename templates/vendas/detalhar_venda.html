@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Detalhes da Venda - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+
+<h2>Detalhes da Venda #{{ venda.id }}</h2>
+
+<p>
+    <strong>Comprador:</strong>
+    {{ venda.comprador|default_if_none:"Não identificado" }}
+</p>
+
+<p>
+    <strong>Funcionário:</strong>
+    {{ venda.funcionario }}
+</p>
+
+<p>
+    <strong>Data da Venda:</strong>
+    {{ venda.data_venda|date:"d/m/Y H:i" }}
+</p>
+
+<p>
+    <strong>Valor Total:</strong>
+    R$ {{ venda.valor_total|floatformat:2 }}
+</p>
+
+<p>
+    <strong>Status:</strong>
+    {{ venda.get_status_display }}
+</p>
+
+<a href="{% url 'vendas:listar_vendas' %}">
+    Voltar para a lista de vendas
+</a>
+
+{% endblock body %}
