@@ -15,6 +15,9 @@ class ItemVendaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields["material"].queryset = (
-            MaterialPapelaria.objects.filter(ativo=True)
-        )
+        if self.instance.pk:
+            self.fields.pop("material")
+        else:
+            self.fields["material"].queryset = (
+                MaterialPapelaria.objects.filter(ativo=True)
+            )
