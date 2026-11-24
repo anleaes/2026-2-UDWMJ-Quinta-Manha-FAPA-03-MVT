@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 from django.core.validators import MinValueValidator
 
@@ -25,7 +27,7 @@ class Venda(models.Model):
         max_digits=10,
         decimal_places=2,
         default=0,
-        validators=[MinValueValidator(0)]       
+        validators=[MinValueValidator(0)]
     )
 
     status = models.CharField(
@@ -33,6 +35,14 @@ class Venda(models.Model):
         choices=Status.choices,
         default=Status.ABERTA
     )
+
+    def calcular_total(self):
+        total = Decimal("0.00")
+
+        for item in self.itens.all():
+            total += item.calcular_subtotal()
+
+        return total
 
     class Meta:
         verbose_name = "Venda"
