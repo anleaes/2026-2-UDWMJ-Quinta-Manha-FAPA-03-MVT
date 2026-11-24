@@ -44,6 +44,38 @@ def detalhar_venda(request, id_venda):
     }
 
     return render(request, template_name, context)
+    
+
+def editar_venda(request, id_venda):
+    template_name = 'vendas/adicionar_venda.html'
+    context = {}
+
+    venda = get_object_or_404(Venda, id=id_venda)
+
+    if venda.status != Venda.Status.ABERTA:
+        return redirect('vendas:detalhar_venda', id_venda=id_venda)
+
+    if request.method == 'POST':
+        form = VendaForm(request.POST, instance=venda)
+
+        if form.is_valid():
+            try:
+                venda.atualizar_dados(
+                    comprador=form.cleaned_data['comprador'],
+                    funcionario=form.cleaned_data['funcionario']
+                )
+
+                return redirect('vendas:detalhar_venda', id_venda=id_venda)
+
+            except ValidationError as erro:
+                form.add_error(None, erro)
+    else:
+        form = VendaForm(instance=venda)
+
+    context['form'] = form
+    context['venda'] = venda
+
+    return render(request, template_name, context)
 
 
 @require_POST
