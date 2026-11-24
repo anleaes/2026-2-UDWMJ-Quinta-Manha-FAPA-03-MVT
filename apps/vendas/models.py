@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 
 class Venda(models.Model):
     class Status(models.TextChoices):
@@ -23,7 +24,8 @@ class Venda(models.Model):
     valor_total = models.DecimalField(
         max_digits=10,
         decimal_places=2,
-        default=0
+        default=0,
+        validators=[MinValueValidator(0)]       
     )
 
     status = models.CharField(
@@ -31,3 +33,11 @@ class Venda(models.Model):
         choices=Status.choices,
         default=Status.ABERTA
     )
+
+    class Meta:
+        verbose_name = "Venda"
+        verbose_name_plural = "Vendas"
+        ordering = ["-data_venda"]
+
+    def __str__(self):
+        return f"Venda #{self.id}"
