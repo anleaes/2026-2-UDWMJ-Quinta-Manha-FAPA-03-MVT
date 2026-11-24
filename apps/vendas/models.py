@@ -56,6 +56,15 @@ class Venda(models.Model):
                 "A venda precisa possuir pelo menos um item."
             )
 
+    def cancelar_venda(self):
+        if self.status != self.Status.ABERTA:
+            raise ValidationError(
+                "Somente vendas abertas podem ser canceladas."
+            )
+
+        self.status = self.Status.CANCELADA
+        self.save(update_fields=["status"])
+
     class Meta:
         verbose_name = "Venda"
         verbose_name_plural = "Vendas"
