@@ -24,3 +24,6 @@ class ItemVenda(models.Model):
         decimal_places=2,
         validators=[MinValueValidator(0)]
     )
+
+    def calcular_subtotal(self):
+        return self.quantidade * self.preco_unitario
