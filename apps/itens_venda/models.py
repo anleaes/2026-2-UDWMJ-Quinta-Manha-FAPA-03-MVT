@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.validators import MinValueValidator
+
 
 class ItemVenda(models.Model):
     venda = models.ForeignKey(
@@ -11,4 +13,14 @@ class ItemVenda(models.Model):
         'materiais_papelaria.MaterialPapelaria',
         on_delete=models.PROTECT,
         related_name='itens_venda'
+    )
+
+    quantidade = models.PositiveIntegerField(
+        validators=[MinValueValidator(1)]
+    )
+
+    preco_unitario = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0)]
     )
