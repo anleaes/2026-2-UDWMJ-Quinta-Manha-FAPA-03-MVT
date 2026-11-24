@@ -25,6 +25,7 @@
             <th>Quantidade</th>
             <th>Preço unitário</th>
             <th>Subtotal</th>
+            <th>Ações</th>
         </tr>
     </thead>
 
@@ -35,10 +36,17 @@
                 <td>{{ item.quantidade }}</td>
                 <td>R$ {{ item.preco_unitario|floatformat:2 }}</td>
                 <td>R$ {{ item.calcular_subtotal|floatformat:2 }}</td>
+                <td>
+                    {% if venda.status == 'ABERTA' %}
+                        <a href="{% url 'itens_venda:editar_item' venda.id item.id %}">
+                            Editar
+                        </a>
+                    {% endif %}
+                </td>
             </tr>
         {% empty %}
             <tr>
-                <td colspan="4">Nenhum item cadastrado.</td>
+                <td colspan="5">Nenhum item cadastrado.</td>
             </tr>
         {% endfor %}
     </tbody>
