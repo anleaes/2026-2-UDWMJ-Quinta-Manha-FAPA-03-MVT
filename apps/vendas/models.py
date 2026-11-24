@@ -45,6 +45,8 @@ class Venda(models.Model):
 
         return total
 
+    # implementar finalizar_venda() apos a integracao
+    # com ItemVenda, Estoque e Pagamento.
     def _validar_finalizacao(self):
         if self.status != self.Status.ABERTA:
             raise ValidationError(
@@ -56,6 +58,8 @@ class Venda(models.Model):
                 "A venda precisa possuir pelo menos um item."
             )
 
+    # verificar a existencia de pagamento confirmado
+    # antes de permitir o cancelamento.
     def cancelar_venda(self):
         if self.status != self.Status.ABERTA:
             raise ValidationError(
