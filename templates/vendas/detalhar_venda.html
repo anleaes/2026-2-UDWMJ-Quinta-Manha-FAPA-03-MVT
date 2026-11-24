@@ -8,6 +8,10 @@
 
 <h2>Detalhes da Venda #{{ venda.id }}</h2>
 
+{% if erro %}
+    <p>{{ erro }}</p>
+{% endif %}
+
 <p>
     <strong>Comprador:</strong>
     {{ venda.comprador|default_if_none:"Não identificado" }}
@@ -39,6 +43,17 @@
     </a>
 
     <br><br>
+
+    <form method="POST"
+          action="{% url 'vendas:cancelar_venda' venda.id %}"
+          onsubmit="return confirm('Deseja realmente cancelar esta venda?');">
+
+        {% csrf_token %}
+
+        <button type="submit">Cancelar venda</button>
+    </form>
+
+    <br>
 {% endif %}
 
 <a href="{% url 'vendas:listar_vendas' %}">
