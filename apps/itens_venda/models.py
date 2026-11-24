@@ -6,3 +6,9 @@ class ItemVenda(models.Model):
         on_delete=models.CASCADE,
         related_name='itens'
     )
+
+    material = models.ForeignKey(
+        'materiais_papelaria.MaterialPapelaria',
+        on_delete=models.PROTECT,
+        related_name='itens_venda'
+    )
