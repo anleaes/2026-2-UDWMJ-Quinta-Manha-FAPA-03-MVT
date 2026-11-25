@@ -30,3 +30,13 @@ def adicionar_estoque(request):
     }
     return render(request, template_name, context)
 
+
+def listar_estoques(request):
+    template_name = 'estoques/listar_estoques.html'
+    estoques = Estoque.objects.select_related('material').all()
+    context = {
+        'estoques': estoques,
+    }
+    return render(request, template_name, context)
+
+
