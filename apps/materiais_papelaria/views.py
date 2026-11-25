@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
+from django.db.models.deletion import ProtectedError
 
 from .forms import MaterialPapelariaForm
 from .models import MaterialPapelaria
@@ -42,5 +43,19 @@ def editar_material(request, id_material):
 @require_POST
 def excluir_material(request, id_material):
     material = get_object_or_404(MaterialPapelaria, id=id_material)
-    material.delete()
+
+    try:
+        material.delete()
+    except ProtectedError:
+        materiais = MaterialPapelaria.objects.select_related('grupo', 'marca')
+
+        return render(
+            request,
+            'materiais_papelaria/listar_materiais.html',
+            {
+                'materiais': materiais,
+                'erro': 'Não é possível excluir um material que possui registros associados.',
+            },
+        )
+
     return redirect('materiais_papelaria:listar_materiais')
