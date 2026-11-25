@@ -29,7 +29,7 @@ class Estoque(models.Model):
             raise ValidationError('Informe uma quantidade inteira maior que zero.')
 
         self.quantidade += qtd
-        self.save()
+        self.save(update_fields=['quantidade', 'ultima_atualizacao'])
 
     def retirar_quantidade(self, qtd):
         if type(qtd) is not int or qtd <= 0:
@@ -39,11 +39,11 @@ class Estoque(models.Model):
             raise ValidationError('Saldo insuficiente em estoque.')
 
         self.quantidade -= qtd
-        self.save()
+        self.save(update_fields=['quantidade', 'ultima_atualizacao'])
 
     def ajustar_quantidade(self, nova_qtd):
         if type(nova_qtd) is not int or nova_qtd < 0:
             raise ValidationError('Informe uma quantidade inteira não negativa.')
 
         self.quantidade = nova_qtd
-        self.save()
+        self.save(update_fields=['quantidade', 'ultima_atualizacao'])
