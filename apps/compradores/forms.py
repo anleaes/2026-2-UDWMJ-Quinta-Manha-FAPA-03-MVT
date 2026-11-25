@@ -9,6 +9,13 @@ class CompradorForm(forms.ModelForm):
         model = Comprador
         exclude = ()
 
+        widgets = {
+            'data_nascimento': forms.DateInput(
+                format='%Y-%m-%d',
+                attrs={'type': 'date'}
+            )
+        }
+
     def clean_cpf(self):
         cpf = self.cleaned_data['cpf'].strip()
 
