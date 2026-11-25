@@ -8,6 +8,10 @@
 
 <h2>Lista de Marcas</h2>
 
+{% if erro %}
+    <p>{{ erro }}</p>
+{% endif %}
+
 <a href="{% url 'marcas:adicionar_marca' %}">
     Cadastrar nova marca
 </a>
