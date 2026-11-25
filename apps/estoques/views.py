@@ -40,3 +40,30 @@ def listar_estoques(request):
     return render(request, template_name, context)
 
 
+def editar_estoque(request, id_estoque):
+    template_name = 'estoques/adicionar_estoque.html'
+    estoque = get_object_or_404(Estoque.objects.select_related('material'), id=id_estoque)
+    quantidade_atual = estoque.quantidade
+
+    if request.method == 'POST':
+        form = EstoqueForm(request.POST, instance=estoque)
+        if form.is_valid():
+            try:
+                editado = form.save(commit=False)
+                # Mantendo a quantidade atual do estoque
+                editado.material = estoque.material
+                editado.quantidade = quantidade_atual
+                editado.save()
+                return redirect('estoques:listar_estoques')
+            except ValidationError as exc:
+                form.add_error(None, exc.message)
+    else:
+        form = EstoqueForm(instance=estoque)
+
+    context = {
+        'form': form,
+        'estoque': estoque,
+        'editando': True,
+    }
+    return render(request, template_name, context)
+
