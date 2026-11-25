@@ -1,4 +1,5 @@
 from django import forms
+from django.utils import timezone
 from .models import Comprador
 
 
@@ -19,3 +20,13 @@ class CompradorForm(forms.ModelForm):
             )
 
         return cpf
+
+    def clean_data_nascimento(self):
+        data_nascimento = self.cleaned_data['data_nascimento']
+
+        if data_nascimento > timezone.localdate():
+            raise forms.ValidationError(
+                'Data de nascimento inválida.'
+            )
+
+        return data_nascimento
