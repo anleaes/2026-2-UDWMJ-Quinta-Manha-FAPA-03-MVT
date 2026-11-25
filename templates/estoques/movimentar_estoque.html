@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Alterar Quantidade - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+<br />
+<b>Alterar Quantidade do Estoque</b>
+<br />
+<br />
+
+<p><strong>Material:</strong> {{ estoque.material }}</p>
+<p><strong>Quantidade atual:</strong> {{ estoque.quantidade }}</p>
+<p><strong>Estoque mínimo:</strong> {{ estoque.estoque_minimo }}</p>
+<p><strong>Localização:</strong> {{ estoque.localizacao }}</p>
+
+<br />
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+        <div>
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <label for="{{ form.operacao.id_for_label }}">Tipo de operação</label>
+    <br />
+    {{ form.operacao }}
+    {% if form.operacao.errors %}
+        <div>{{ form.operacao.errors }}</div>
+    {% endif %}
+    <br />
+    <br />
+
+    <label for="{{ form.quantidade.id_for_label }}">Quantidade</label>
+    <br />
+    {{ form.quantidade }}
+    {% if form.quantidade.errors %}
+        <div>{{ form.quantidade.errors }}</div>
+    {% endif %}
+
+    <p>
+        Ao ajustar a quantidade, o valor informado substituirá
+        a quantidade atual do estoque.
+    </p>
+
+    <button type="submit">Confirmar</button>
+    <a href="{% url 'estoques:listar_estoques' %}">Cancelar</a>
+</form>
+{% endblock body %}
