@@ -35,3 +35,15 @@ class FornecedorForm(forms.ModelForm):
                 )
 
         return cnpj
+
+    def clean_telefone(self):
+        telefone = self.cleaned_data['telefone']
+
+        telefone = telefone.replace('(', '').replace(')', '').replace('-', '').replace(' ', '')
+
+        if not telefone.isdigit() or len(telefone) not in (10, 11):
+            raise forms.ValidationError(
+                'Número de telefone inválido.'
+            )
+
+        return telefone
