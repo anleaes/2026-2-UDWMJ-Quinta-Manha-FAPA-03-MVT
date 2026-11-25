@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.exceptions import ValidationError
-from .forms import EstoqueForm
+from .forms import EstoqueForm, MovimentarEstoqueForm
 from .models import Estoque
 
 # Create your views here.
@@ -74,6 +74,42 @@ def consultar_estoque(request, id_estoque):
     template_name = 'estoques/consultar_estoque.html'
     estoque = get_object_or_404(Estoque.objects.select_related('material'), id=id_estoque)
     context = {
+        'estoque': estoque,
+    }
+    return render(request, template_name, context)
+
+
+def movimentar_estoque(request, id_estoque):
+    template_name = 'estoques/movimentar_estoque.html'
+    estoque = get_object_or_404(Estoque.objects.select_related('material'), id=id_estoque)
+
+    if request.method == 'POST':
+        form = MovimentarEstoqueForm(request.POST)
+
+        if form.is_valid():
+            operacao = form.cleaned_data['operacao']
+            quantidade = form.cleaned_data['quantidade']
+
+            try:
+                if operacao == 'adicionar':
+                    estoque.adicionar_quantidade(quantidade)
+
+                elif operacao == 'retirar':
+                    estoque.retirar_quantidade(quantidade)
+
+                elif operacao == 'ajustar':
+                    estoque.ajustar_quantidade(quantidade)
+
+                return redirect('estoques:listar_estoques')
+
+            except ValidationError as exc:
+                form.add_error('quantidade', exc)
+
+    else:
+        form = MovimentarEstoqueForm()
+
+    context = {
+        'form': form,
         'estoque': estoque,
     }
     return render(request, template_name, context)
