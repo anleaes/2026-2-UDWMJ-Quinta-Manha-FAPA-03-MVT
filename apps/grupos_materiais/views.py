@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 from .models import GrupoMaterial
 from .forms import GrupoMaterialForm
 
@@ -19,6 +20,7 @@ def adicionar_grupo(request):
     context['form'] = form
     return render(request, template_name, context)
 
+
 def listar_grupos(request):
     template_name = 'grupos_materiais/listar_grupos.html'
 
@@ -29,6 +31,7 @@ def listar_grupos(request):
     }
 
     return render(request, template_name, context)
+
 
 def editar_grupo(request, id_grupo):
     template_name = 'grupos_materiais/adicionar_grupo.html'
@@ -48,6 +51,8 @@ def editar_grupo(request, id_grupo):
     context['form'] = form
     return render(request, template_name, context)
 
+
+@require_POST
 def excluir_grupo(request, id_grupo):
     grupo = get_object_or_404(GrupoMaterial, id=id_grupo)
 
