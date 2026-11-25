@@ -8,10 +8,11 @@ class FornecedorForm(forms.ModelForm):
         model = Fornecedor
         exclude = ()
 
-    def clean_cnpj(self):
-        cnpj = self.cleaned_data['cnpj']
+    def _normalizar_cnpj(self, cnpj):
+        return cnpj.replace('.', '').replace('/', '').replace('-', '').strip()
 
-        cnpj = cnpj.replace('.', '').replace('/', '').replace('-', '').strip()
+    def clean_cnpj(self):
+        cnpj = self._normalizar_cnpj(self.cleaned_data['cnpj'])
 
         if not cnpj.isdigit() or len(cnpj) != 14:
             raise forms.ValidationError(
@@ -22,5 +23,15 @@ class FornecedorForm(forms.ModelForm):
             raise forms.ValidationError(
                 'Informe um CNPJ válido.'
             )
+
+        fornecedores = Fornecedor.objects.exclude(pk=self.instance.pk)
+
+        for fornecedor in fornecedores:
+            cnpj_existente = self._normalizar_cnpj(fornecedor.cnpj)
+
+            if cnpj_existente == cnpj:
+                raise forms.ValidationError(
+                    'Este CNPJ já está cadastrado.'
+                )
 
         return cnpj
