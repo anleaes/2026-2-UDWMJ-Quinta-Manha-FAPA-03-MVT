@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Detalhes do Estoque - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+<br />
+<b>Detalhes do Estoque</b>
+<br />
+<br />
+
+<p><strong>ID:</strong> {{ estoque.id }}</p>
+<p><strong>Material:</strong> {{ estoque.material }}</p>
+<p><strong>Quantidade disponível:</strong> {{ estoque.quantidade }}</p>
+<p><strong>Estoque mínimo:</strong> {{ estoque.estoque_minimo }}</p>
+<p><strong>Localização:</strong> {{ estoque.localizacao }}</p>
+<p>
+    <strong>Situação:</strong>
+    {% if estoque.quantidade < estoque.estoque_minimo %}
+        <strong>Abaixo do estoque mínimo</strong>
+    {% else %}
+        Estoque normal
+    {% endif %}
+</p>
+<p><strong>Última atualização:</strong> {{ estoque.ultima_atualizacao }}</p>
+
+<br />
+<a href="{% url 'estoques:editar_estoque' estoque.id %}">Editar</a> |
+<a href="{% url 'estoques:listar_estoques' %}">Voltar para a lista</a>
+{% endblock body %}
