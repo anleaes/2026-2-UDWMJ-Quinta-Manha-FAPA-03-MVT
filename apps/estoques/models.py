@@ -42,8 +42,8 @@ class Estoque(models.Model):
         self.save()
 
     def ajustar_quantidade(self, nova_qtd):
-            if type(nova_qtd) is not int or nova_qtd < 0:
-                raise ValidationError('Informe uma quantidade inteira não negativa.')
-    
-            self.quantidade = nova_qtd
-            self.save()
+        if type(nova_qtd) is not int or nova_qtd < 0:
+            raise ValidationError('Informe uma quantidade inteira não negativa.')
+
+        self.quantidade = nova_qtd
+        self.save()
