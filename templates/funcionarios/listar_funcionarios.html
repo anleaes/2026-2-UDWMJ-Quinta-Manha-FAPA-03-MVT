@@ -8,6 +8,10 @@
 
 <h2>Lista de Funcionários</h2>
 
+{% if erro %}
+    <p>{{ erro }}</p>
+{% endif %}
+
 <a href="{% url 'funcionarios:adicionar_funcionario' %}">
     Cadastrar novo funcionário
 </a>
