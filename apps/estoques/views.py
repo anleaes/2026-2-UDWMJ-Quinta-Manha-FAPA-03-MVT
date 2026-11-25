@@ -67,3 +67,11 @@ def editar_estoque(request, id_estoque):
     }
     return render(request, template_name, context)
 
+
+def consultar_estoque(request, id_estoque):
+    template_name = 'estoques/consultar_estoque.html'
+    estoque = get_object_or_404(Estoque.objects.select_related('material'), id=id_estoque)
+    context = {
+        'estoque': estoque,
+    }
+    return render(request, template_name, context)
