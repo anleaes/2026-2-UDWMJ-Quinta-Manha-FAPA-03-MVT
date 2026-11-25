@@ -23,3 +23,11 @@ class Estoque(models.Model):
 
     def __str__(self): 
         return f'{self.material} - Saldo: {self.quantidade}'
+
+def adicionar_quantidade(self, qtd):
+        if type(qtd) is not int or qtd <= 0:
+            raise ValidationError('Informe uma quantidade inteira maior que zero.')
+
+        self.quantidade += qtd
+        self.save()
+
