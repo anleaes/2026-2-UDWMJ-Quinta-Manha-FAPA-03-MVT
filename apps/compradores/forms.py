@@ -30,3 +30,15 @@ class CompradorForm(forms.ModelForm):
             )
 
         return data_nascimento
+
+    def clean_telefone_contato(self):
+        telefone = self.cleaned_data['telefone_contato']
+
+        telefone = telefone.replace('(', '').replace(')', '').replace('-', '').replace(' ', '')
+
+        if not telefone.isdigit() or len(telefone) not in (10, 11):
+            raise forms.ValidationError(
+                'Número de telefone inválido.'
+            )
+
+        return telefone
