@@ -35,6 +35,34 @@ class EntradaEstoque(models.Model):
     data_entrada = models.DateTimeField('Data da Entrada', auto_now_add=True)
 
     def registrar_entrada(self):
+        if not self._state.adding or (
+            self.pk is not None and self.__class__.objects.filter(pk=self.pk).exists()
+        ):
+            raise ValidationError('Esta entrada já foi registrada.')
+
+        if any(value is None for value in (
+            self.fornecedor_id,
+            self.material_id,
+            self.funcionario_id,
+        )):
+            raise ValidationError(
+                'Selecione um fornecedor, um material e um funcionário cadastrados.'
+            )
+
+        if type(self.quantidade) is not int or self.quantidade <= 0:
+            raise ValidationError(
+                'Informe uma quantidade inteira maior que zero.'
+            )
+
+        if (
+            not isinstance(self.custo_unitario, Decimal)
+            or not self.custo_unitario.is_finite()
+        ):
+            raise ValidationError('Informe um custo unitário válido.')
+
+        if self.custo_unitario < 0:
+            raise ValidationError('O custo unitário não pode ser negativo.')
+
         with transaction.atomic():
             try:
                 estoque = Estoque.objects.select_for_update().get(
