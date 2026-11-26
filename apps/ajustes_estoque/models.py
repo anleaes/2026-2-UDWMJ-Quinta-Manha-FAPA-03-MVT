@@ -30,8 +30,19 @@ class AjusteEstoque(models.Model):
         return self.quantidade_contada - self.quantidade_anterior
 
     def registrar_ajuste(self):
-        if not self._state.adding:
+        if not self._state.adding or (
+            self.pk is not None and self.__class__.objects.filter(pk=self.pk).exists()
+        ):
             raise ValidationError('Este ajuste já foi registrado.')
+
+        if self.material_id is None or self.funcionario_id is None:
+            raise ValidationError('Selecione um material e um funcionário cadastrados.')
+
+        if type(self.quantidade_contada) is not int or self.quantidade_contada < 0:
+            raise ValidationError('A quantidade contada deve ser um inteiro não negativo.')
+
+        if not isinstance(self.motivo, str) or not self.motivo.strip():
+            raise ValidationError('Informe um motivo para o ajuste.')
 
         with transaction.atomic():
             try:
