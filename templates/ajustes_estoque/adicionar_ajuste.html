@@ -13,9 +13,48 @@
     <input type="hidden" name="idempotency_token" value="{{ idempotency_token }}">
     {{ form.non_field_errors }}
     {{ form.as_p }}
+    <p><strong>Saldo atual:</strong> <span id="saldo_atual">Selecione um material.</span></p>
+    <p><strong>Prévia da diferença:</strong> <span id="diferenca_preview">—</span></p>
+    <p>A prévia usa o saldo atual. O cálculo definitivo será feito ao registrar o ajuste.</p>
     <button type="submit">Registrar ajuste</button>
 </form>
 
 <a href="{% url 'ajustes_estoque:listar_ajustes' %}">Cancelar</a>
+
+{{ saldos_estoque|json_script:"saldos-estoque" }}
+<script>
+    const saldosEstoque = JSON.parse(
+        document.getElementById('saldos-estoque').textContent
+    );
+    const materialSelect = document.getElementById('id_material');
+    const quantidadeInput = document.getElementById('id_quantidade_contada');
+    const saldoAtual = document.getElementById('saldo_atual');
+    const diferencaPreview = document.getElementById('diferenca_preview');
+
+    function atualizarPrevia() {
+        const materialId = materialSelect.value;
+
+        if (!materialId || saldosEstoque[materialId] === undefined) {
+            saldoAtual.textContent = 'Selecione um material.';
+            diferencaPreview.textContent = '—';
+            return;
+        }
+
+        const saldo = Number(saldosEstoque[materialId]);
+        saldoAtual.textContent = `${saldo} unidade(s)`;
+
+        if (quantidadeInput.value === '') {
+            diferencaPreview.textContent = 'Informe a quantidade contada.';
+            return;
+        }
+
+        const diferenca = Number(quantidadeInput.value) - saldo;
+        diferencaPreview.textContent = diferenca > 0 ? `+${diferenca}` : diferenca;
+    }
+
+    materialSelect.addEventListener('change', atualizarPrevia);
+    quantidadeInput.addEventListener('input', atualizarPrevia);
+    atualizarPrevia();
+</script>
 
 {% endblock body %}
