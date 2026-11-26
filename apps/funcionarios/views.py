@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Funcionario
 from .forms import FuncionarioForm
 from django.views.decorators.http import require_POST
+from django.db.models.deletion import ProtectedError
 
 
 def adicionar_funcionario(request):
@@ -56,6 +57,16 @@ def editar_funcionario(request, id_funcionario):
 def excluir_funcionario(request, id_funcionario):
     funcionario = get_object_or_404(Funcionario, id=id_funcionario)
 
-    funcionario.delete()
+    try:
+        funcionario.delete()
+    except ProtectedError:
+        template_name = 'funcionarios/listar_funcionarios.html'
+
+        context = {
+            'funcionarios': Funcionario.objects.all(),
+            'erro': 'Não é possível excluir um funcionário que possui vendas associadas.',
+        }
+
+        return render(request, template_name, context)
 
     return redirect('funcionarios:listar_funcionarios')

@@ -8,6 +8,10 @@
 
 <h2>Materiais de Papelaria</h2>
 
+{% if erro %}
+    <p>{{ erro }}</p>
+{% endif %}
+
 <a href="{% url 'materiais_papelaria:adicionar_material' %}">
     Cadastrar novo material
 </a>

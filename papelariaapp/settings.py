@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'funcionarios.apps.FuncionariosConfig',
     'fornecedores.apps.FornecedoresConfig',
     'compradores.apps.CompradoresConfig',
+    'vendas.apps.VendasConfig',
+    'itens_venda.apps.ItensVendaConfig',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,4 +1,5 @@
 from django import forms
+from django.utils import timezone
 from .models import Comprador
 
 
@@ -7,6 +8,13 @@ class CompradorForm(forms.ModelForm):
     class Meta:
         model = Comprador
         exclude = ()
+
+        widgets = {
+            'data_nascimento': forms.DateInput(
+                format='%Y-%m-%d',
+                attrs={'type': 'date'}
+            )
+        }
 
     def clean_cpf(self):
         cpf = self.cleaned_data['cpf'].strip()
@@ -19,3 +27,25 @@ class CompradorForm(forms.ModelForm):
             )
 
         return cpf
+
+    def clean_data_nascimento(self):
+        data_nascimento = self.cleaned_data['data_nascimento']
+
+        if data_nascimento > timezone.localdate():
+            raise forms.ValidationError(
+                'Data de nascimento inválida.'
+            )
+
+        return data_nascimento
+
+    def clean_telefone_contato(self):
+        telefone = self.cleaned_data['telefone_contato']
+
+        telefone = telefone.replace('(', '').replace(')', '').replace('-', '').replace(' ', '')
+
+        if not telefone.isdigit() or len(telefone) not in (10, 11):
+            raise forms.ValidationError(
+                'Número de telefone inválido.'
+            )
+
+        return telefone

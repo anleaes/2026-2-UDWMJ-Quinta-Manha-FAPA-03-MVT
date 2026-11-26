@@ -8,6 +8,10 @@
 
 <h2>Lista de Grupos de Materiais</h2>
 
+{% if erro %}
+    <p>{{ erro }}</p>
+{% endif %}
+
 <a href="{% url 'grupos_materiais:adicionar_grupo' %}">
     Cadastrar novo grupo
 </a>
@@ -42,9 +46,10 @@
                     Editar
                 </a>
 
-                <a href="{% url 'grupos_materiais:excluir_grupo' grupo.id %}">
-                    Excluir
-                </a>
+                <form method="POST" action="{% url 'grupos_materiais:excluir_grupo' grupo.id %}" onsubmit="return confirm('Deseja realmente excluir este grupo?');">
+                    {% csrf_token %}
+                    <button type="submit">Excluir</button>
+                </form>
             </td>
         </tr>
         {% empty %}

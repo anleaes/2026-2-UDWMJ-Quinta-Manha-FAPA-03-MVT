@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Marca
 from .forms import MarcaForm
 from django.views.decorators.http import require_POST
+from django.db.models.deletion import ProtectedError
 
 
 def adicionar_marca(request):
@@ -20,6 +21,7 @@ def adicionar_marca(request):
     context['form'] = form
     return render(request, template_name, context)
 
+
 def listar_marcas(request):
     template_name = 'marcas/listar_marcas.html'
 
@@ -30,6 +32,7 @@ def listar_marcas(request):
     }
 
     return render(request, template_name, context)
+
 
 def editar_marca(request, id_marca):
     template_name = 'marcas/adicionar_marca.html'
@@ -49,10 +52,21 @@ def editar_marca(request, id_marca):
     context['form'] = form
     return render(request, template_name, context)
 
+
 @require_POST
 def excluir_marca(request, id_marca):
     marca = get_object_or_404(Marca, id=id_marca)
 
-    marca.delete()
+    try:
+        marca.delete()
+    except ProtectedError:
+        template_name = 'marcas/listar_marcas.html'
+
+        context = {
+            'marcas': Marca.objects.all(),
+            'erro': 'Não é possível excluir uma marca que possui materiais associados.',
+        }
+
+        return render(request, template_name, context)
 
     return redirect('marcas:listar_marcas')
