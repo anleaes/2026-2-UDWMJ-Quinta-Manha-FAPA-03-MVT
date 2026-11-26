@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Lista de Estoques - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+<br />
+<a href="{% url 'estoques:adicionar_estoque' %}">Cadastrar novo estoque</a>
+<br />
+<br />
+<b>Lista de Estoques</b>
+<br />
+<br />
+
+{% if estoques %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Material</th>
+                <th>Quantidade</th>
+                <th>Estoque mínimo</th>
+                <th>Localização</th>
+                <th>Situação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for estoque in estoques %}
+                <tr>
+                    <td>{{ estoque.id }}</td>
+                    <td>{{ estoque.material }}</td>
+                    <td>{{ estoque.quantidade }}</td>
+                    <td>{{ estoque.estoque_minimo }}</td>
+                    <td>{{ estoque.localizacao }}</td>
+                    <td>
+                        {% if estoque.quantidade < estoque.estoque_minimo %}
+                            <strong>Abaixo do estoque mínimo</strong>
+                        {% else %}
+                            Estoque normal
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'estoques:consultar_estoque' estoque.id %}">Consultar</a> |
+                        <a href="{% url 'estoques:editar_estoque' estoque.id %}">Editar</a> |
+                        <a href="{% url 'estoques:movimentar_estoque' estoque.id %}">Movimentar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Não há estoques cadastrados.</p>
+{% endif %}
+{% endblock body %}

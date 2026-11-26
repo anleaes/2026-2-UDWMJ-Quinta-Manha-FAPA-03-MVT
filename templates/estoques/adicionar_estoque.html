@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if editando %}Editar Estoque{% else %}Cadastrar Estoque{% endif %} - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+<br />
+<b>{% if editando %}Editar Configuração de Estoque{% else %}Cadastro de Estoque{% endif %}</b>
+<br />
+<br />
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+        <div>
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <label>Material</label>
+    <br />
+    {{ form.material }}
+    {% if form.material.errors %}
+        <div>{{ form.material.errors }}</div>
+    {% endif %}
+    <br />
+    <br />
+
+    <label>Estoque mínimo</label>
+    <br />
+    {{ form.estoque_minimo }}
+    {% if form.estoque_minimo.errors %}
+        <div>{{ form.estoque_minimo.errors }}</div>
+    {% endif %}
+    <br />
+    <br />
+
+    <label>Localização</label>
+    <br />
+    {{ form.localizacao }}
+    {% if form.localizacao.errors %}
+        <div>{{ form.localizacao.errors }}</div>
+    {% endif %}
+    <br />
+    <br />
+
+    <button type="submit">Salvar</button>
+    <a href="{% url 'estoques:listar_estoques' %}">Cancelar</a>
+</form>
+{% endblock body %}
