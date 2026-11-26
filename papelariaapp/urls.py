@@ -18,6 +18,10 @@ urlpatterns = [
     path('fornecedores/', include('fornecedores.urls')),
     path('compradores/', include('compradores.urls')),
     path('estoques/', include('estoques.urls', namespace='estoques')),
+    path(
+        'entradas-estoque/',
+        include('entradas_estoque.urls', namespace='entradas_estoque'),
+    ),
     path('vendas/', include('vendas.urls')),
     path('itens-venda/', include('itens_venda.urls')),
 ]
