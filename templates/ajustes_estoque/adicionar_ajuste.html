@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Registrar Ajuste - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+
+<h2>Registrar ajuste de estoque</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="idempotency_token" value="{{ idempotency_token }}">
+    {{ form.non_field_errors }}
+    {{ form.as_p }}
+    <button type="submit">Registrar ajuste</button>
+</form>
+
+<a href="{% url 'ajustes_estoque:listar_ajustes' %}">Cancelar</a>
+
+{% endblock body %}
