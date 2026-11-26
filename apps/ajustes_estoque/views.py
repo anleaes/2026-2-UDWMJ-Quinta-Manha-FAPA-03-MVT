@@ -9,6 +9,7 @@ from django.shortcuts import redirect, render
 
 from estoques.models import Estoque
 from .forms import AjusteEstoqueForm
+from .models import AjusteEstoque
 
 TOKEN_SESSION_KEY = 'ajustes_estoque_tokens'
 
@@ -91,5 +92,18 @@ def adicionar_ajuste(request):
         'form': form,
         'saldos_estoque': saldos_estoque,
         'idempotency_token': idempotency_token,
+    }
+    return render(request, template_name, context)
+
+
+def listar_ajustes(request):
+    template_name = 'ajustes_estoque/listar_ajustes.html'
+    ajustes = AjusteEstoque.objects.select_related(
+        'material',
+        'funcionario',
+    ).all()
+
+    context = {
+        'ajustes': ajustes,
     }
     return render(request, template_name, context)
