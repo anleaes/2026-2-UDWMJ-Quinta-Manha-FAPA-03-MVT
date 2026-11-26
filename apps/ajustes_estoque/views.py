@@ -5,7 +5,7 @@ from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.sessions.models import Session
 from django.core.exceptions import ValidationError
 from django.db import transaction
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from estoques.models import Estoque
 from .forms import AjusteEstoqueForm
@@ -105,5 +105,18 @@ def listar_ajustes(request):
 
     context = {
         'ajustes': ajustes,
+    }
+    return render(request, template_name, context)
+
+
+def consultar_ajuste(request, id_ajuste):
+    template_name = 'ajustes_estoque/consultar_ajuste.html'
+    ajuste = get_object_or_404(
+        AjusteEstoque.objects.select_related('material', 'funcionario'),
+        id=id_ajuste,
+    )
+
+    context = {
+        'ajuste': ajuste,
     }
     return render(request, template_name, context)
