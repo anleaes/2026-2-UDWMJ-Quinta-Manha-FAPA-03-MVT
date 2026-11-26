@@ -8,28 +8,47 @@
 
 <h2>Registrar ajuste de estoque</h2>
 
-<form method="POST">
+<form method="POST" id="form_ajuste">
     {% csrf_token %}
-    <input type="hidden" name="idempotency_token" value="{{ idempotency_token }}">
-    {{ form.non_field_errors }}
+
     {{ form.as_p }}
-    <p><strong>Saldo atual:</strong> <span id="saldo_atual">Selecione um material.</span></p>
-    <p><strong>Prévia da diferença:</strong> <span id="diferenca_preview">—</span></p>
-    <p>A prévia usa o saldo atual. O cálculo definitivo será feito ao registrar o ajuste.</p>
-    <button type="submit">Registrar ajuste</button>
+
+    <p>
+        <strong>Saldo atual:</strong>
+        <span id="saldo_atual">Selecione um material.</span>
+    </p>
+
+    <p>
+        <strong>Prévia da diferença:</strong>
+        <span id="diferenca_preview">—</span>
+    </p>
+
+    <p>
+        A prévia usa o saldo atual.
+        O cálculo definitivo será feito ao registrar o ajuste.
+    </p>
+
+    <button type="submit" id="btn_registrar">
+        Registrar ajuste
+    </button>
 </form>
 
 <a href="{% url 'ajustes_estoque:listar_ajustes' %}">Cancelar</a>
 
 {{ saldos_estoque|json_script:"saldos-estoque" }}
+
 <script>
     const saldosEstoque = JSON.parse(
         document.getElementById('saldos-estoque').textContent
     );
+
     const materialSelect = document.getElementById('id_material');
     const quantidadeInput = document.getElementById('id_quantidade_contada');
     const saldoAtual = document.getElementById('saldo_atual');
     const diferencaPreview = document.getElementById('diferenca_preview');
+
+    const formAjuste = document.getElementById('form_ajuste');
+    const btnRegistrar = document.getElementById('btn_registrar');
 
     function atualizarPrevia() {
         const materialId = materialSelect.value;
@@ -48,12 +67,37 @@
             return;
         }
 
-        const diferenca = Number(quantidadeInput.value) - saldo;
-        diferencaPreview.textContent = diferenca > 0 ? `+${diferenca}` : diferenca;
+        const quantidade = Number(quantidadeInput.value);
+
+        if (!Number.isInteger(quantidade) || quantidade < 0) {
+            diferencaPreview.textContent = 'Quantidade inválida.';
+            return;
+        }
+
+        const diferenca = quantidade - saldo;
+
+        diferencaPreview.textContent =
+            diferenca > 0 ? `+${diferenca}` : diferenca;
     }
 
     materialSelect.addEventListener('change', atualizarPrevia);
     quantidadeInput.addEventListener('input', atualizarPrevia);
+
+    formAjuste.addEventListener('submit', function(event) {
+        if (btnRegistrar.disabled) {
+            event.preventDefault();
+            return;
+        }
+
+        btnRegistrar.disabled = true;
+        btnRegistrar.textContent = 'Registrando...';
+    });
+
+    window.addEventListener('pageshow', function() {
+        btnRegistrar.disabled = false;
+        btnRegistrar.textContent = 'Registrar ajuste';
+    });
+
     atualizarPrevia();
 </script>
 
