@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from .forms import EntradaEstoqueForm
 from .models import EntradaEstoque
 
@@ -38,6 +38,24 @@ def listar_entradas(request):
 
     context = {
         'entradas': entradas,
+    }
+
+    return render(request, template_name, context)
+
+
+def consultar_entrada(request, id_entrada):
+    template_name = 'entradas_estoque/consultar_entrada.html'
+    entrada = get_object_or_404(
+        EntradaEstoque.objects.select_related(
+            'fornecedor',
+            'material',
+            'funcionario',
+        ),
+        id=id_entrada,
+    )
+
+    context = {
+        'entrada': entrada,
     }
 
     return render(request, template_name, context)
