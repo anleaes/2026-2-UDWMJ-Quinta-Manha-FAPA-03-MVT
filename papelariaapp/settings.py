@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'marcas.apps.MarcasConfig',
     'estoques.apps.EstoquesConfig',
+    'ajustes_estoque.apps.AjustesEstoqueConfig',
 
     
     'core.apps.CoreConfig',
