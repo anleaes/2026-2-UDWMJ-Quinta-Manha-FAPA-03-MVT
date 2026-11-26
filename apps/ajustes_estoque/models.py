@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
-from django.db import models
+from django.db import models, transaction
+from estoques.models import Estoque
 
 
 class AjusteEstoque(models.Model):
@@ -27,6 +28,26 @@ class AjusteEstoque(models.Model):
             raise ValidationError('Informe as quantidades para calcular a diferença.')
 
         return self.quantidade_contada - self.quantidade_anterior
+
+    def registrar_ajuste(self):
+        if not self._state.adding:
+            raise ValidationError('Este ajuste já foi registrado.')
+
+        with transaction.atomic():
+            try:
+                estoque = Estoque.objects.select_for_update().get(
+                    material_id=self.material_id
+                )
+            except Estoque.DoesNotExist:
+                raise ValidationError(
+                    'Não existe estoque cadastrado para este material.'
+                )
+
+            self.quantidade_anterior = estoque.quantidade
+            self.diferenca = self.calcular_diferenca()
+            self.full_clean()
+            self.save()
+            estoque.ajustar_quantidade(self.quantidade_contada)
 
     class Meta:
         verbose_name = 'Ajuste de Estoque'
