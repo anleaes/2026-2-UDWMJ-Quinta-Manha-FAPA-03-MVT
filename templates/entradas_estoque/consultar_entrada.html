@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Consulta da Entrada - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+
+<h2>Detalhes da Entrada de Estoque</h2>
+
+<p><strong>ID:</strong> {{ entrada.id }}</p>
+<p><strong>Fornecedor:</strong> {{ entrada.fornecedor }}</p>
+<p><strong>Material:</strong> {{ entrada.material }}</p>
+<p><strong>Funcionário:</strong> {{ entrada.funcionario }}</p>
+<p><strong>Quantidade recebida:</strong> {{ entrada.quantidade }}</p>
+<p><strong>Custo unitário:</strong> R$ {{ entrada.custo_unitario|floatformat:2 }}</p>
+<p><strong>Data da entrada:</strong> {{ entrada.data_entrada|date:"d/m/Y H:i" }}</p>
+
+<a href="{% url 'entradas_estoque:listar_entradas' %}">Voltar para a listagem</a>
+
+{% endblock body %}
