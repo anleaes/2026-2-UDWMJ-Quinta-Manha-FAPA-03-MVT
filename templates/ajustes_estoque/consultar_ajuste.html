@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Consulta do Ajuste - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+
+<h2>Detalhes do Ajuste de Estoque</h2>
+
+<p><strong>Material:</strong> {{ ajuste.material }}</p>
+<p><strong>Funcionário responsável:</strong> {{ ajuste.funcionario }}</p>
+<p><strong>Quantidade anterior:</strong> {{ ajuste.quantidade_anterior }}</p>
+<p><strong>Quantidade contada:</strong> {{ ajuste.quantidade_contada }}</p>
+<p><strong>Diferença:</strong>
+    {% if ajuste.diferenca > 0 %}
+        <strong style="color: #18794e;">+{{ ajuste.diferenca }}</strong>
+    {% elif ajuste.diferenca < 0 %}
+        <strong style="color: #b42318;">{{ ajuste.diferenca }}</strong>
+    {% else %}
+        <strong>{{ ajuste.diferenca }}</strong>
+    {% endif %}
+</p>
+<p><strong>Motivo:</strong> {{ ajuste.motivo }}</p>
+<p><strong>Data do ajuste:</strong> {{ ajuste.data_ajuste|date:"d/m/Y H:i" }}</p>
+
+<a href="{% url 'ajustes_estoque:listar_ajustes' %}">Voltar ao histórico</a>
+
+{% endblock body %}
