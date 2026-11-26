@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.shortcuts import redirect, render
 from .forms import EntradaEstoqueForm
+from .models import EntradaEstoque
 
 
 def adicionar_entrada(request):
@@ -22,6 +23,21 @@ def adicionar_entrada(request):
 
     context = {
         'form': form,
+    }
+
+    return render(request, template_name, context)
+
+
+def listar_entradas(request):
+    template_name = 'entradas_estoque/listar_entradas.html'
+    entradas = EntradaEstoque.objects.select_related(
+        'fornecedor',
+        'material',
+        'funcionario',
+    ).all()
+
+    context = {
+        'entradas': entradas,
     }
 
     return render(request, template_name, context)
