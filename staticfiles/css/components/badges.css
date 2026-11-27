@@ -1,0 +1,46 @@
+/* Estrutura compartilhada dos indicadores */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+
+    padding: var(--spacing-xs) var(--spacing-sm);
+
+    border-radius: var(--border-radius-sm);
+
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+/* Indicador de sucesso */
+.badge-success {
+    background-color: var(--color-success-bg);
+    color: var(--color-success);
+}
+
+/* Indicador neutro */
+.badge-neutral {
+    background-color: var(--color-neutral-bg);
+    color: var(--color-neutral);
+}
+
+/* Indicador de atencao */
+.badge-warning {
+    background-color: var(--color-warning-bg);
+    color: var(--color-warning);
+}
+
+/* Indicador de erro */
+.badge-danger {
+    background-color: var(--color-danger-bg);
+    color: var(--color-danger);
+}
+
+/* Indicador informativo */
+.badge-info {
+    background-color: var(--color-info-bg);
+    color: var(--color-info);
+}
