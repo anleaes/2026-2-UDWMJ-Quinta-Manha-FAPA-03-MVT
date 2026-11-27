@@ -18,7 +18,6 @@ class MovimentarEstoqueForm(forms.Form):
     OPERACOES = [
         ('adicionar', 'Adicionar quantidade'),
         ('retirar', 'Retirar quantidade'),
-        ('ajustar', 'Ajustar quantidade'),
     ]
 
     operacao = forms.ChoiceField(
