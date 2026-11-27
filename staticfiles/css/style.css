@@ -1,10 +1,7 @@
 @import url("base/variables.css");
+@import url("base/reset.css");
+@import url("base/typography.css");
 
-body {
-    background-color: rgb(245, 245, 245);
-    font-family: Arial, sans-serif;
-    margin: 0;
-}
 
 nav {
     background-color: #157caf;
