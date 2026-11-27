@@ -15,7 +15,7 @@ def adicionar_item(request, id_venda):
     if venda.status != Venda.Status.ABERTA:
         return redirect('vendas:detalhar_venda', id_venda)
 
-    form = ItemVendaForm(request.POST if request.method == 'POST' else None)
+    form = ItemVendaForm(request.POST if request.method == 'POST' else None, venda=venda)
 
     if request.method == 'POST' and form.is_valid():
         item = form.save(commit=False)
