@@ -27,5 +27,8 @@
 
 <br />
 <a href="{% url 'estoques:editar_estoque' estoque.id %}">Editar</a> |
+{% if estoque.material.ativo %}
+    <a href="{% url 'ajustes_estoque:adicionar_ajuste_estoque' estoque.id %}">Ajustar</a> |
+{% endif %}
 <a href="{% url 'estoques:listar_estoques' %}">Voltar para a lista</a>
 {% endblock body %}

@@ -5,8 +5,16 @@
 {% endblock title %}
 
 {% block body %}
+
+{% if messages %}
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
 <br />
-<a href="{% url 'estoques:adicionar_estoque' %}">Cadastrar novo estoque</a>
+<a href="{% url 'estoques:adicionar_estoque' %}">Cadastrar novo estoque</a> |
+<a href="{% url 'ajustes_estoque:listar_ajustes' %}">Histórico de ajustes</a>
 <br />
 <br />
 <b>Lista de Estoques</b>
@@ -45,6 +53,9 @@
                         <a href="{% url 'estoques:consultar_estoque' estoque.id %}">Consultar</a> |
                         <a href="{% url 'estoques:editar_estoque' estoque.id %}">Editar</a> |
                         <a href="{% url 'estoques:movimentar_estoque' estoque.id %}">Movimentar</a>
+                        {% if estoque.material.ativo %}
+                            | <a href="{% url 'ajustes_estoque:adicionar_ajuste_estoque' estoque.id %}">Ajustar</a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
