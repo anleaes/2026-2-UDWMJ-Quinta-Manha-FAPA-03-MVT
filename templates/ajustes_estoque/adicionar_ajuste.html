@@ -33,7 +33,11 @@
     </button>
 </form>
 
-<a href="{% url 'ajustes_estoque:listar_ajustes' %}">Cancelar</a>
+{% if estoque %}
+    <a href="{% url 'estoques:listar_estoques' %}">Cancelar</a>
+{% else %}
+    <a href="{% url 'ajustes_estoque:listar_ajustes' %}">Cancelar</a>
+{% endif %}
 
 {{ saldos_estoque|json_script:"saldos-estoque" }}
 
