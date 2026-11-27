@@ -97,9 +97,6 @@ def movimentar_estoque(request, id_estoque):
                 elif operacao == 'retirar':
                     estoque.retirar_quantidade(quantidade)
 
-                elif operacao == 'ajustar':
-                    estoque.ajustar_quantidade(quantidade)
-
                 return redirect('estoques:listar_estoques')
 
             except ValidationError as exc:

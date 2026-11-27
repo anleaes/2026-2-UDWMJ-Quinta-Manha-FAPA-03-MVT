@@ -7,11 +7,22 @@ from .forms import AjusteEstoqueForm
 from .models import AjusteEstoque
 
 
-def adicionar_ajuste(request):
+def adicionar_ajuste(request, id_estoque=None):
     template_name = 'ajustes_estoque/adicionar_ajuste.html'
 
+    estoque = None
+    material = None
+
+    if id_estoque is not None:
+        estoque = get_object_or_404(
+            Estoque,
+            id=id_estoque,
+            material__ativo=True,
+        )
+        material = estoque.material
+
     if request.method == 'POST':
-        form = AjusteEstoqueForm(request.POST)
+        form = AjusteEstoqueForm(request.POST, material=material)
 
         if form.is_valid():
             try:
@@ -19,11 +30,15 @@ def adicionar_ajuste(request):
                 ajuste.registrar_ajuste()
 
                 messages.success(request, 'Ajuste de estoque registrado com sucesso.')
+
+                if estoque is not None:
+                    return redirect('estoques:listar_estoques')
+
                 return redirect('ajustes_estoque:listar_ajustes')
             except ValidationError as erro:
                 form.add_error(None, erro)
     else:
-        form = AjusteEstoqueForm()
+        form = AjusteEstoqueForm(material=material)
 
     saldos_estoque = dict(
         Estoque.objects.filter(
@@ -34,6 +49,7 @@ def adicionar_ajuste(request):
     context = {
         'form': form,
         'saldos_estoque': saldos_estoque,
+        'estoque': estoque,
     }
     return render(request, template_name, context)
 

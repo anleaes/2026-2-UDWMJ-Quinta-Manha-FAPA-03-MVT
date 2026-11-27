@@ -44,10 +44,12 @@
         <div>{{ form.quantidade.errors }}</div>
     {% endif %}
 
-    <p>
-        Ao ajustar a quantidade, o valor informado substituirá
-        a quantidade atual do estoque.
-    </p>
+    {% if estoque.material.ativo %}
+        <p>
+            Para corrigir a quantidade do estoque,
+            <a href="{% url 'ajustes_estoque:adicionar_ajuste_estoque' estoque.id %}">registre um ajuste de estoque</a>.
+        </p>
+    {% endif %}
 
     <button type="submit">Confirmar</button>
     <a href="{% url 'estoques:listar_estoques' %}">Cancelar</a>

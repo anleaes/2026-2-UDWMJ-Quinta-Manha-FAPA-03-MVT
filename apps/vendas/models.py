@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from django.db import models
+from django.db import models, transaction
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
 
@@ -45,8 +45,7 @@ class Venda(models.Model):
 
         return total
 
-    # implementar finalizar_venda() apos a integracao
-    # com ItemVenda, Estoque e Pagamento.
+
     def _validar_finalizacao(self):
         if self.status != self.Status.ABERTA:
             raise ValidationError(
@@ -58,9 +57,17 @@ class Venda(models.Model):
                 "A venda precisa possuir pelo menos um item."
             )
 
-    # verificar a existencia de pagamento confirmado
-    # antes de permitir o cancelamento.
+    # Implementar finalizar_venda() após a integração
+    # com Estoque e Pagamento.
+
+    @transaction.atomic
     def cancelar_venda(self):
+        venda = Venda.objects.select_for_update().get(
+            pk=self.pk
+        )
+
+        self.status = venda.status
+
         if self.status != self.Status.ABERTA:
             raise ValidationError(
                 "Somente vendas abertas podem ser canceladas."
@@ -69,7 +76,14 @@ class Venda(models.Model):
         self.status = self.Status.CANCELADA
         self.save(update_fields=["status"])
 
+    @transaction.atomic
     def atualizar_dados(self, comprador, funcionario):
+        venda = Venda.objects.select_for_update().get(
+            pk=self.pk
+        )
+
+        self.status = venda.status
+
         if self.status != self.Status.ABERTA:
             raise ValidationError(
                 "Somente vendas abertas podem ser editadas."
@@ -77,12 +91,16 @@ class Venda(models.Model):
 
         if not funcionario.ativo:
             raise ValidationError(
-                "O funcionario precisa estar ativo."
+                "O funcionário precisa estar ativo."
             )
 
         self.comprador = comprador
         self.funcionario = funcionario
-        self.save(update_fields=["comprador", "funcionario"])
+
+        self.save(update_fields=[
+            "comprador",
+            "funcionario"
+        ])
 
     class Meta:
         verbose_name = "Venda"

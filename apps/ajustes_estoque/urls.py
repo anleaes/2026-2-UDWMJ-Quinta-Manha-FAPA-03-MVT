@@ -1,3 +1,4 @@
+
 from django.urls import path
 
 from . import views
@@ -6,6 +7,7 @@ app_name = 'ajustes_estoque'
 
 urlpatterns = [
     path('adicionar/', views.adicionar_ajuste, name='adicionar_ajuste'),
+    path('adicionar/<int:id_estoque>/',views.adicionar_ajuste,name='adicionar_ajuste_estoque'),
     path('listar/', views.listar_ajustes, name='listar_ajustes'),
     path(
         'consultar/<int:id_ajuste>/',
