@@ -25,13 +25,17 @@ class AjusteEstoqueForm(forms.ModelForm):
             'motivo',
         ]
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, material=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['material'].queryset = MaterialPapelaria.objects.filter(
             ativo=True,
             estoque__isnull=False,
         )
         self.fields['funcionario'].queryset = Funcionario.objects.filter(ativo=True)
+
+        if material is not None:
+            self.initial['material'] = material.pk
+            self.fields['material'].disabled = True
 
     def clean_motivo(self):
         motivo = self.cleaned_data['motivo']
