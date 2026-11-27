@@ -1,0 +1,136 @@
+/* Estrutura do menu lateral */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+
+    position: sticky;
+    top: 0;
+
+    width: var(--sidebar-width);
+    height: 100vh;
+    overflow-y: auto;
+
+    padding: var(--spacing-lg) var(--spacing-md);
+
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+}
+
+/* Identidade visual */
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+
+    padding-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+
+    border-bottom: 1px solid var(--color-secondary);
+}
+
+.sidebar-brand-icon {
+    width: 30px;
+    height: 30px;
+    color: var(--color-cream);
+}
+
+.sidebar-brand-name {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+/* Navegacao */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    flex: 1;
+}
+
+/* Grupos de navegacao */
+.sidebar-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-lg);
+}
+
+/* Titulos dos grupos */
+.sidebar-group-title {
+    padding: 0 var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+
+    color: var(--color-accent);
+}
+
+/* Links */
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    min-height: 40px;
+    padding: 10px;
+
+    border-radius: var(--border-radius);
+    text-decoration: none;
+
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+
+    color: var(--color-text-inverse);
+
+    transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast);
+}
+
+/* Interacao com o menu */
+.sidebar-link:hover {
+    background-color: var(--color-primary-hover);
+    color: var(--color-text-inverse);
+}
+
+/* Modulo selecionado */
+.sidebar-link.is-active {
+    background-color: var(--color-accent);
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+/* Foco por teclado */
+.sidebar-link:focus-visible {
+    outline-color: var(--color-cream);
+}
+
+/* Configuracao dos icones */
+.sidebar-icon,
+.sidebar-brand-icon {
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.sidebar-icon {
+    width: 19px;
+    height: 19px;
+}
+
+/* Rodape */
+.sidebar-footer {
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-md);
+
+    border-top: 1px solid var(--color-secondary);
+
+    color: var(--color-accent);
+    font-size: var(--font-size-xs);
+}

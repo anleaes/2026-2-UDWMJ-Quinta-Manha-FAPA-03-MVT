@@ -1,0 +1,85 @@
+{% with namespace=request.resolver_match.namespace %}
+
+<header class="header">
+
+    <button type="button"
+            class="sidebar-toggle"
+            data-sidebar-toggle
+            aria-controls="app-sidebar"
+            aria-expanded="false"
+            hidden>
+        Menu
+    </button>
+
+    <nav class="breadcrumb" aria-label="Localização atual">
+
+        {% if namespace == 'core' %}
+            <span class="breadcrumb-current">Início</span>
+
+        {% elif namespace == 'grupos_materiais' %}
+            <span>Cadastros</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Grupos de materiais</span>
+
+        {% elif namespace == 'marcas' %}
+            <span>Cadastros</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Marcas</span>
+
+        {% elif namespace == 'materiais_papelaria' %}
+            <span>Cadastros</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Materiais</span>
+
+        {% elif namespace == 'fornecedores' %}
+            <span>Cadastros</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Fornecedores</span>
+
+        {% elif namespace == 'compradores' %}
+            <span>Cadastros</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Compradores</span>
+
+        {% elif namespace == 'funcionarios' %}
+            <span>Cadastros</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Funcionários</span>
+
+        {% elif namespace == 'estoques' %}
+            <span class="breadcrumb-current">Estoque</span>
+
+        {% elif namespace == 'entradas_estoque' %}
+            <span>Estoque</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Entradas</span>
+
+        {% elif namespace == 'ajustes_estoque' %}
+            <span>Estoque</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Ajustes</span>
+
+        {% elif namespace == 'vendas' %}
+            <span class="breadcrumb-current">Vendas</span>
+
+        {% elif namespace == 'itens_venda' %}
+            <span>Vendas</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Itens de venda</span>
+
+        {% elif namespace == 'pagamentos' %}
+            <span>Vendas</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Pagamento</span>
+
+        {% else %}
+            <span class="breadcrumb-current">Papelaria</span>
+        {% endif %}
+
+    </nav>
+
+    <span class="header-brand">Papelaria A3</span>
+
+</header>
+
+{% endwith %}

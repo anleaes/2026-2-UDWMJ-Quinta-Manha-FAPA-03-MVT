@@ -1,23 +1,21 @@
+/* Base */
+@import url("base/variables.css");
+@import url("base/reset.css");
+@import url("base/typography.css");
 
-body {
-    background-color: rgb(245, 245, 245);
-    font-family: Arial, sans-serif;
-    margin: 0;
-}
+/* Layout */
+@import url("layout/sidebar.css");
+@import url("layout/header.css");
+@import url("layout/content.css");
 
-nav {
-    background-color: #157caf;
-    padding: 15px;
-}
+/* Components */
+@import url("components/buttons.css");
+@import url("components/cards.css");
+@import url("components/tables.css");
+@import url("components/forms.css");
+@import url("components/badges.css");
+@import url("components/alerts.css");
+@import url("components/tabs.css");
 
-nav a {
-    color: white;
-    text-decoration: none;
-    margin-right: 15px;
-    font-size: 15px;
-}
-
-nav a:hover {
-    color: #dbeafe;
-    text-decoration: underline;
-}
+/* Responsive */
+@import url("layout/responsive.css");

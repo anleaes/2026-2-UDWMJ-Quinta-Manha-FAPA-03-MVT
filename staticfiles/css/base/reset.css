@@ -1,0 +1,45 @@
+/* Normalizacao do dimensionamento */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Configuracoes basicas da pagina */
+html {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+/* Normalizacao de imagens */
+img,
+svg {
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+/* Normalizacao de elementos de formulario */
+input,
+select,
+textarea,
+button {
+    font: inherit;
+}
+
+/* Normalizacao de tabelas */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Navegacao por teclado */
+:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+}

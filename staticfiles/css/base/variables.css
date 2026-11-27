@@ -1,0 +1,77 @@
+:root {
+    /* Identidade visual */
+    --color-primary: #315D63;
+    --color-primary-hover: #264B50;
+    --color-secondary: #68A7AD;
+    --color-accent: #99C4C8;
+    --color-sand: #E5CB9F;
+    --color-cream: #EEE4AB;
+    --color-soft: #E2F0F1;
+
+    /* Superficies */
+    --color-background: #F7F7F3;
+    --color-surface: #FFFFFF;
+    --color-border: #D1DEDE;
+
+    /* Textos */
+    --color-text: #263B3E;
+    --color-text-muted: #647778;
+    --color-text-inverse: #FFFFFF;
+
+    /* Sucesso */
+    --color-success: #166534;
+    --color-success-bg: #DCFCE7;
+
+    /* Erro */
+    --color-danger: #B91C1C;
+    --color-danger-bg: #FEE2E2;
+
+    /* Aviso */
+    --color-warning: #92400E;
+    --color-warning-bg: #FEF3C7;
+
+    /* Informacao */
+    --color-info: #62562B;
+    --color-info-bg: var(--color-cream);
+
+    /* Estados neutros */
+    --color-neutral: #4B5563;
+    --color-neutral-bg: #E5E7EB;
+
+    /* Foco dos elementos interativos */
+    --color-focus: var(--color-primary);
+
+    /* Tipografia */
+    --font-family: Arial, Helvetica, sans-serif;
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-md: 16px;
+    --font-size-lg: 20px;
+    --font-size-xl: 24px;
+    --font-size-2xl: 32px;
+
+    /* Espacamentos */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+
+    /* Dimensoes do layout */
+    --sidebar-width: 240px;
+    --header-height: 64px;
+
+    /* Bordas */
+    --border-radius-sm: 4px;
+    --border-radius: 8px;
+    --border-radius-lg: 12px;
+
+    /* Sombras */
+    --shadow-sm: 0 1px 3px rgba(38, 59, 62, 0.08);
+    --shadow-md: 0 4px 12px rgba(38, 59, 62, 0.12);
+
+    /* Transicoes */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+}
