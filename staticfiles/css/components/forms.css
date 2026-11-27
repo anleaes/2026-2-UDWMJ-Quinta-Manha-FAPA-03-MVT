@@ -1,0 +1,204 @@
+/* Estrutura compartilhada dos formularios */
+.form {
+    width: 100%;
+    min-width: 0;
+}
+
+/* Organizacao dos campos */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-lg);
+}
+
+/* Campo que ocupa toda a largura */
+.form-full {
+    grid-column: 1 / -1;
+}
+
+/* Agrupamento de campo e label */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+
+    min-width: 0;
+}
+
+/* Identificacao dos campos */
+.form-label,
+.form-group label {
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+}
+
+/* Indicacao de obrigatoriedade */
+.form-required {
+    color: var(--color-danger);
+}
+
+/* Campos de entrada */
+.form-control,
+.form-group input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]),
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+
+    padding: var(--spacing-sm) var(--spacing-md);
+
+    background-color: var(--color-surface);
+    color: var(--color-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+
+    font-size: var(--font-size-sm);
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+/* Texto de preenchimento */
+.form-control::placeholder,
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--color-text-muted);
+}
+
+/* Estado de foco */
+.form-control:focus,
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--color-focus);
+}
+
+/* Campos de texto longo */
+.form-group textarea,
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Campos de selecao */
+.form-group select,
+select.form-control {
+    cursor: pointer;
+}
+
+/* Campos somente para leitura */
+.form-group input[readonly],
+.form-group textarea[readonly],
+.form-control[readonly] {
+    background-color: var(--color-background);
+    color: var(--color-text-muted);
+}
+
+/* Campos desabilitados */
+.form-group input:disabled,
+.form-group select:disabled,
+.form-group textarea:disabled,
+.form-control:disabled {
+    background-color: var(--color-neutral-bg);
+    color: var(--color-text-muted);
+
+    cursor: not-allowed;
+}
+
+/* Campos de marcacao */
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.form input[type="checkbox"],
+.form input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+
+    accent-color: var(--color-primary);
+
+    flex-shrink: 0;
+}
+
+.form input[type="checkbox"]:not(:disabled),
+.form input[type="radio"]:not(:disabled) {
+    cursor: pointer;
+}
+
+/* Upload de arquivos */
+.form-group input[type="file"] {
+    width: 100%;
+    min-width: 0;
+
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.form-group input[type="file"]::file-selector-button {
+    margin-right: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+
+    background-color: var(--color-soft);
+    color: var(--color-primary);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+
+    cursor: pointer;
+}
+
+/* Textos auxiliares */
+.form-help,
+.form .helptext {
+    margin: 0;
+
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+/* Campos com erros de validacao */
+.form-control[aria-invalid="true"],
+.form-group input[aria-invalid="true"],
+.form-group select[aria-invalid="true"],
+.form-group textarea[aria-invalid="true"] {
+    border-color: var(--color-danger);
+}
+
+/* Erros retornados pelo Django */
+.form-error,
+.form .errorlist {
+    margin: 0;
+    padding: 0;
+
+    color: var(--color-danger);
+    font-size: var(--font-size-xs);
+
+    list-style: none;
+}
+
+/* Erros gerais do formulario */
+.form .errorlist.nonfield {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+
+    background-color: var(--color-danger-bg);
+    border-radius: var(--border-radius);
+}
+
+/* Acoes do formulario */
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+
+    margin-top: var(--spacing-lg);
+}
