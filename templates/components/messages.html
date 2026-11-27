@@ -1,0 +1,14 @@
+{% if messages %}
+    <div class="alert-container">
+
+        {% for message in messages %}
+            <div class="alert {% if message.level_tag == 'debug' %}alert-neutral{% else %}alert-{{ message.level_tag|default:'neutral' }}{% endif %}"
+                 role="{% if message.level_tag == 'error' or message.level_tag == 'warning' %}alert{% else %}status{% endif %}">
+
+                <p class="alert-message">{{ message }}</p>
+
+            </div>
+        {% endfor %}
+
+    </div>
+{% endif %}
