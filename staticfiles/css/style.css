@@ -4,22 +4,5 @@
 @import url("base/typography.css");
 
 /* Layout */
+@import url("layout/sidebar.css");
 @import url("layout/content.css");
-
-
-nav {
-    background-color: #157caf;
-    padding: 15px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin-right: 15px;
-    font-size: 15px;
-}
-
-nav a:hover {
-    color: #dbeafe;
-    text-decoration: underline;
-}

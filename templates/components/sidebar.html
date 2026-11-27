@@ -1,0 +1,154 @@
+{% load static %}
+
+{% with namespace=request.resolver_match.namespace %}
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-brand">
+        <svg class="sidebar-brand-icon" aria-hidden="true">
+            <use href="{% static 'img/svg/icons.svg' %}#book-open"></use>
+        </svg>
+
+        <span class="sidebar-brand-name">
+            Papelaria
+        </span>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Menu principal">
+
+        <!-- Inicio -->
+        <a href="{% url 'core:home' %}"
+           class="sidebar-link {% if namespace == 'core' %}is-active{% endif %}"
+           {% if namespace == 'core' %}aria-current="true"{% endif %}>
+
+            <svg class="sidebar-icon" aria-hidden="true">
+                <use href="{% static 'img/svg/icons.svg' %}#home"></use>
+            </svg>
+
+            <span>Início</span>
+        </a>
+
+        <!-- Cadastros -->
+        <div class="sidebar-group">
+
+            <span class="sidebar-group-title">
+                CADASTROS
+            </span>
+
+            <a href="{% url 'grupos_materiais:listar_grupos' %}"
+               class="sidebar-link {% if namespace == 'grupos_materiais' %}is-active{% endif %}"
+               {% if namespace == 'grupos_materiais' %}aria-current="true"{% endif %}>
+
+                <svg class="sidebar-icon" aria-hidden="true">
+                    <use href="{% static 'img/svg/icons.svg' %}#layers"></use>
+                </svg>
+
+                <span>Grupos de materiais</span>
+            </a>
+
+            <a href="{% url 'marcas:listar_marcas' %}"
+               class="sidebar-link {% if namespace == 'marcas' %}is-active{% endif %}"
+               {% if namespace == 'marcas' %}aria-current="true"{% endif %}>
+
+                <svg class="sidebar-icon" aria-hidden="true">
+                    <use href="{% static 'img/svg/icons.svg' %}#tag"></use>
+                </svg>
+
+                <span>Marcas</span>
+            </a>
+
+            <a href="{% url 'materiais_papelaria:listar_materiais' %}"
+               class="sidebar-link {% if namespace == 'materiais_papelaria' %}is-active{% endif %}"
+               {% if namespace == 'materiais_papelaria' %}aria-current="true"{% endif %}>
+
+                <svg class="sidebar-icon" aria-hidden="true">
+                    <use href="{% static 'img/svg/icons.svg' %}#package"></use>
+                </svg>
+
+                <span>Materiais</span>
+            </a>
+
+            <a href="{% url 'fornecedores:listar_fornecedores' %}"
+               class="sidebar-link {% if namespace == 'fornecedores' %}is-active{% endif %}"
+               {% if namespace == 'fornecedores' %}aria-current="true"{% endif %}>
+
+                <svg class="sidebar-icon" aria-hidden="true">
+                    <use href="{% static 'img/svg/icons.svg' %}#truck"></use>
+                </svg>
+
+                <span>Fornecedores</span>
+            </a>
+
+            <a href="{% url 'compradores:listar_compradores' %}"
+               class="sidebar-link {% if namespace == 'compradores' %}is-active{% endif %}"
+               {% if namespace == 'compradores' %}aria-current="true"{% endif %}>
+
+                <svg class="sidebar-icon" aria-hidden="true">
+                    <use href="{% static 'img/svg/icons.svg' %}#users"></use>
+                </svg>
+
+                <span>Compradores</span>
+            </a>
+
+            <a href="{% url 'funcionarios:listar_funcionarios' %}"
+               class="sidebar-link {% if namespace == 'funcionarios' %}is-active{% endif %}"
+               {% if namespace == 'funcionarios' %}aria-current="true"{% endif %}>
+
+                <svg class="sidebar-icon" aria-hidden="true">
+                    <use href="{% static 'img/svg/icons.svg' %}#contact"></use>
+                </svg>
+
+                <span>Funcionários</span>
+            </a>
+
+        </div>
+
+        <!-- Estoque -->
+        <div class="sidebar-group">
+
+            <span class="sidebar-group-title">
+                ESTOQUE
+            </span>
+
+            <a href="{% url 'estoques:listar_estoques' %}"
+               class="sidebar-link {% if namespace == 'estoques' or namespace == 'ajustes_estoque' or namespace == 'entradas_estoque' %}is-active{% endif %}"
+               {% if namespace == 'estoques' or namespace == 'ajustes_estoque' or namespace == 'entradas_estoque' %}aria-current="true"{% endif %}>
+
+                <svg class="sidebar-icon" aria-hidden="true">
+                    <use href="{% static 'img/svg/icons.svg' %}#warehouse"></use>
+                </svg>
+
+                <span>Estoque</span>
+            </a>
+
+        </div>
+
+        <!-- Vendas -->
+        <div class="sidebar-group">
+
+            <span class="sidebar-group-title">
+                VENDAS
+            </span>
+
+            <a href="{% url 'vendas:listar_vendas' %}"
+               class="sidebar-link {% if namespace == 'vendas' or namespace == 'itens_venda' or namespace == 'pagamentos' %}is-active{% endif %}"
+               {% if namespace == 'vendas' or namespace == 'itens_venda' or namespace == 'pagamentos' %}aria-current="true"{% endif %}>
+
+                <svg class="sidebar-icon" aria-hidden="true">
+                    <use href="{% static 'img/svg/icons.svg' %}#shopping-cart"></use>
+                </svg>
+
+                <span>Vendas</span>
+            </a>
+
+        </div>
+
+    </nav>
+
+    <footer class="sidebar-footer">
+        Projeto acadêmico A3
+    </footer>
+
+</aside>
+
+{% endwith %}

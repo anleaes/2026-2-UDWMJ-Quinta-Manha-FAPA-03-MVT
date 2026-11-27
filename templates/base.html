@@ -13,24 +13,19 @@
 </head>
 <body>
 
-<nav>
-    <a href="{% url 'core:home' %}">Início</a>
-    <a href="{% url 'grupos_materiais:listar_grupos' %}">Grupos de Materiais</a>
-    <a href="{% url 'marcas:listar_marcas' %}">Marcas</a>
-    <a href="{% url 'funcionarios:listar_funcionarios' %}">Funcionários</a>
-    <a href="{% url 'fornecedores:listar_fornecedores' %}">Fornecedores</a>
-    <a href="{% url 'materiais_papelaria:listar_materiais' %}">Materiais</a>
-    <a href="{% url 'estoques:listar_estoques' %}">Estoque</a>
-    <a href="{% url 'vendas:listar_vendas' %}">Vendas</a>
-    <a href="{% url 'compradores:listar_compradores' %}">Compradores</a>
-</nav>
+<div class="app-layout">
+    {% include 'components/sidebar.html' %}
 
-<hr>
+    <main class="main-content">
+        <section class="page-content">
 
+            {% block body %}
 
-    {% block body %}
+            {% endblock body %}
 
-    {% endblock body %}
+        </section>
+    </main>
+</div>
 
     <script src="{% static 'js/main.js' %}"></script>
 </body>
