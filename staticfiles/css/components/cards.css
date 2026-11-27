@@ -1,0 +1,97 @@
+/* Estrutura compartilhada dos cards */
+.card {
+    min-width: 0;
+
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Cabecalho do card */
+.card-header {
+    padding: var(--spacing-lg);
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* Titulo do card */
+.card-title {
+    margin: 0;
+
+    color: var(--color-text);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+/* Descricao do card */
+.card-description {
+    margin: var(--spacing-xs) 0 0;
+
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+/* Conteudo do card */
+.card-body {
+    min-width: 0;
+    padding: var(--spacing-lg);
+}
+
+/* Rodape do card */
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+
+    padding: var(--spacing-md) var(--spacing-lg);
+
+    border-top: 1px solid var(--color-border);
+}
+
+/* Card interativo */
+.card-link {
+    display: block;
+
+    color: var(--color-text);
+    text-decoration: none;
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.card-link:hover {
+    color: var(--color-text);
+    border-color: var(--color-secondary);
+    box-shadow: var(--shadow-md);
+}
+
+/* Area de icones */
+.card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 48px;
+    height: 48px;
+
+    background-color: var(--color-soft);
+    color: var(--color-primary);
+    border-radius: var(--border-radius);
+}
+
+/* Icones SVG */
+.card-icon svg {
+    width: 24px;
+    height: 24px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
