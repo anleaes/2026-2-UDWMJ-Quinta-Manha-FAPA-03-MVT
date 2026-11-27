@@ -8,11 +8,6 @@
 
 <h2>Ajustes de Estoque</h2>
 
-{% if messages %}
-    {% for message in messages %}
-        <p>{{ message }}</p>
-    {% endfor %}
-{% endif %}
 
 <p>
     <a href="{% url 'ajustes_estoque:adicionar_ajuste' %}">Registrar ajuste</a>
