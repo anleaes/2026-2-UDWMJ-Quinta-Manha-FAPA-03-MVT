@@ -2,6 +2,9 @@ from django.db import models, transaction
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
 
+from estoques.models import Estoque
+from vendas.models import Venda
+
 
 class ItemVenda(models.Model):
     venda = models.ForeignKey(
@@ -30,6 +33,10 @@ class ItemVenda(models.Model):
         return self.quantidade * self.preco_unitario
 
     def _validar_venda_aberta(self):
+        self.venda = Venda.objects.select_for_update().get(
+            pk=self.venda_id
+        )
+
         if self.venda.status != self.venda.Status.ABERTA:
             raise ValidationError(
                 "Somente vendas abertas podem ter seus itens alterados."
@@ -39,6 +46,22 @@ class ItemVenda(models.Model):
         if not self.material.ativo:
             raise ValidationError(
                 "O material precisa estar ativo."
+            )
+
+    def _validar_estoque(self):
+        try:
+            estoque = Estoque.objects.get(
+                material_id=self.material_id
+            )
+        except Estoque.DoesNotExist:
+            raise ValidationError(
+                "O material não possui estoque cadastrado."
+            )
+
+        if self.quantidade > estoque.quantidade:
+            raise ValidationError(
+                f"Estoque insuficiente. "
+                f"Saldo disponível: {estoque.quantidade}."
             )
 
     def _atualizar_total_venda(self):
@@ -55,9 +78,18 @@ class ItemVenda(models.Model):
         self._validar_venda_aberta()
         self._validar_material_ativo()
 
+        if self.venda.itens.filter(
+            material_id=self.material_id
+        ).exists():
+            raise ValidationError(
+                "Este material já está na venda. "
+                "Edite a quantidade do item existente."
+            )
+
         self.preco_unitario = self.material.preco_venda
 
         self.full_clean()
+        self._validar_estoque()
         self.save()
 
         self._atualizar_total_venda()
@@ -74,6 +106,7 @@ class ItemVenda(models.Model):
         self.quantidade = quantidade
 
         self.full_clean()
+        self._validar_estoque()
         self.save(update_fields=["quantidade"])
 
         self._atualizar_total_venda()
@@ -95,6 +128,13 @@ class ItemVenda(models.Model):
         verbose_name = "Item de Venda"
         verbose_name_plural = "Itens de Venda"
         ordering = ["id"]
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["venda", "material"],
+                name="uq_item_venda_material"
+            )
+        ]
 
     def __str__(self):
         return f"{self.material} - Venda #{self.venda_id}"
