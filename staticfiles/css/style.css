@@ -16,3 +16,6 @@
 @import url("components/badges.css");
 @import url("components/alerts.css");
 @import url("components/tabs.css");
+
+/* Responsive */
+@import url("layout/responsive.css");
