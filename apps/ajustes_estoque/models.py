@@ -1,9 +1,36 @@
+
 from django.core.exceptions import ValidationError
 from django.db import models, transaction
 from estoques.models import Estoque
 
 
+class AjusteEstoqueQuerySet(models.QuerySet):
+
+    def update(self, **kwargs):
+        raise ValidationError(
+            'O histórico de ajustes não pode ser alterado.'
+        )
+
+    def delete(self):
+        raise ValidationError(
+            'O histórico de ajustes não pode ser excluído.'
+        )
+
+    def bulk_update(self, objs, fields, **kwargs):
+        raise ValidationError(
+            'O histórico de ajustes não pode ser alterado.'
+        )
+
+    def bulk_create(self, objs, **kwargs):
+        raise ValidationError(
+            'Utilize o método registrar_ajuste() para registrar ajustes.'
+        )
+
+
 class AjusteEstoque(models.Model):
+
+    objects = models.Manager.from_queryset(AjusteEstoqueQuerySet)()
+
     material = models.ForeignKey(
         'materiais_papelaria.MaterialPapelaria',
         on_delete=models.PROTECT,
@@ -25,21 +52,50 @@ class AjusteEstoque(models.Model):
             type(self.quantidade_anterior) is not int
             or type(self.quantidade_contada) is not int
         ):
-            raise ValidationError('Informe as quantidades para calcular a diferença.')
+            raise ValidationError(
+                'Informe as quantidades para calcular a diferença.'
+            )
 
         return self.quantidade_contada - self.quantidade_anterior
 
+    def save(self, *args, **kwargs):
+        if not self._state.adding or (
+            self.pk is not None
+            and self.__class__.objects.filter(pk=self.pk).exists()
+        ):
+            raise ValidationError(
+                'Um ajuste registrado não pode ser alterado.'
+            )
+
+        return super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        if not self._state.adding:
+            raise ValidationError(
+                'Um ajuste registrado não pode ser excluído.'
+            )
+
+        return super().delete(*args, **kwargs)
+
     def registrar_ajuste(self):
         if not self._state.adding or (
-            self.pk is not None and self.__class__.objects.filter(pk=self.pk).exists()
+            self.pk is not None
+            and self.__class__.objects.filter(pk=self.pk).exists()
         ):
             raise ValidationError('Este ajuste já foi registrado.')
 
         if self.material_id is None or self.funcionario_id is None:
-            raise ValidationError('Selecione um material e um funcionário cadastrados.')
+            raise ValidationError(
+                'Selecione um material e um funcionário cadastrados.'
+            )
 
-        if type(self.quantidade_contada) is not int or self.quantidade_contada < 0:
-            raise ValidationError('A quantidade contada deve ser um inteiro não negativo.')
+        if (
+            type(self.quantidade_contada) is not int
+            or self.quantidade_contada < 0
+        ):
+            raise ValidationError(
+                'A quantidade contada deve ser um inteiro não negativo.'
+            )
 
         if not isinstance(self.motivo, str) or not self.motivo.strip():
             raise ValidationError('Informe um motivo para o ajuste.')
@@ -56,8 +112,10 @@ class AjusteEstoque(models.Model):
 
             self.quantidade_anterior = estoque.quantidade
             self.diferenca = self.calcular_diferenca()
+
             self.full_clean()
             self.save()
+
             estoque.ajustar_quantidade(self.quantidade_contada)
 
     class Meta:
